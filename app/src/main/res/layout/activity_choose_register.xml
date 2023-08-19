@@ -66,16 +66,18 @@
                         android:fontFamily="@font/poppins_medium"
                         android:text="Pilih salah satu" />
                     <Button
+                        android:id="@+id/regUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="Register Sebagai User"
                         android:background="@drawable/pill_button" />
                     <Button
+                        android:id="@+id/logAdmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Register Sebagai Admin"
+                        android:text="Login Sebagai Admin"
                         android:background="@drawable/pill_button"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
