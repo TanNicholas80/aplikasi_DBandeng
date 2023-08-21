@@ -47,44 +47,67 @@
                 app:cardCornerRadius="10dp"
             >
                 <LinearLayout
-                    android:padding="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
                 >
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
+                        android:gravity="start"
                     >
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/power_off"
-                        />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                        >
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/power_off"
+                            />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mati"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textColor="@color/white"
+                                android:textSize="18dp"
+                                android:layout_marginLeft="10dp"
+                            />
+                        </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mati"
-                            android:fontFamily="@font/poppins_medium"
+                            android:text="Konveyor"
+                            android:fontFamily="@font/poppins_bold"
                             android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:layout_marginLeft="10dp"
+                            android:textSize="24dp"
                         />
                     </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Konveyor"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                    />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="end"
+                    >
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:textOn="On"
+                            android:textOff="Off"
+                            app:showText="true"
+                            android:thumb="@drawable/custom_switch"
+                            app:track="@drawable/switch_path"
+                        />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="20dp"
                 android:backgroundTint="#347CE1"
