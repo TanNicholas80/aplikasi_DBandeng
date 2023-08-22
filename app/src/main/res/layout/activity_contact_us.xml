@@ -23,6 +23,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:text="Kontak Kami"
                 android:textSize="26dp" />
 
@@ -233,6 +234,7 @@
                 android:background="@drawable/custom_button"
                 android:text="Saran untuk kami"
                 android:textSize="20dp"
+                android:textColor="@color/white"
                 app:backgroundTint="@null" />
         </RelativeLayout>
 

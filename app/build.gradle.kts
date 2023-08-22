@@ -7,13 +7,17 @@ android {
     namespace = "com.example.dbandeng"
     compileSdk = 33
 
+    buildFeatures{
+        dataBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.dbandeng"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -43,5 +47,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("com.etebarian:meow-bottom-navigation:1.3.1")
+    implementation("com.etebarian:meow-bottom-navigation:1.2.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
+
 }

@@ -21,7 +21,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/arrow_back"
-                android:background="none"
                 android:layout_gravity="center"
             />
             <TextView

@@ -22,7 +22,6 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/arrow_back"
-                android:background="none"
                 android:layout_gravity="center"
             />
             <TextView
@@ -42,7 +41,6 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:background="none"
                     android:src="@drawable/icon_user"
                 />
             </LinearLayout>
