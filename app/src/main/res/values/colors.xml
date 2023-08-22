@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_blue">#1291EB</color>
+    <color name="crud_text_main_color">#4A55A2</color>
+    <color name="crud_text_second_color">#7895CB</color>
+    <color name="crud_text_price_color">#0DCC43</color>
+
 </resources>

@@ -14,5 +14,6 @@ class lading_page_home : AppCompatActivity() {
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.icon_user))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.icon_download))
         bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.icon_kecepatan))
+        bottomNavigation.show(1)
     }
 }
