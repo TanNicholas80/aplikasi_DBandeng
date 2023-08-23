@@ -17,7 +17,7 @@
         >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
+                android:layout_height="150dp"
                 android:orientation="vertical"
             >
                 <ImageView
@@ -26,18 +26,40 @@
                     android:src=""
                 />
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="380dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/news_recyclerview"
                     android:orientation="vertical"
                     android:paddingHorizontal="10dp"
+                    android:layout_marginLeft="-5dp"
                 >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                    >
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@drawable/calendar"
+                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:text="19/08/2023"
+                            android:textSize="8dp"
+                        />
+                    </LinearLayout>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:textSize="20dp"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="Judul"/>
+                        android:gravity="bottom"
+                        android:text="Judul"
+                        android:textSize="20dp"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
