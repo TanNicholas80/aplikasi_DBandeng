@@ -122,20 +122,24 @@
                 android:gravity="center"
             >
                 <Button
+                    android:id="@+id/Logout_User"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/edit_user"
-                    android:text="Edit"
+                    android:text="Log Out"
+                    android:drawableLeft="@drawable/log_out"
+                    android:backgroundTint="#E71A1A"
                 />
                 <Space
                     android:layout_width="10dp"
                     android:layout_height="wrap_content"
                 />
                 <Button
+                    android:id="@+id/Edit_User"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
-                    android:text="Log Out"
-                    android:drawableLeft="@drawable/log_out"
+                    android:drawableLeft="@drawable/edit_user"
+                    android:text="Edit"
+                    android:backgroundTint="#1291EB"
                 />
             </LinearLayout>
         </LinearLayout>

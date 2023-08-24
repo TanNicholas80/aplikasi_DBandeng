@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.AnimationTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.modul.ModulNews
 
@@ -53,5 +56,16 @@ class landing_page_news : AppCompatActivity() {
         recyclerView?.setLayoutManager(LinearLayoutManager(this))
         val adaptorNews = landing_AdaptorNews(NewsArrayList)
         recyclerView?.setAdapter(adaptorNews)
+        // setup carousel
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+        imageList.add(SlideModel(R.drawable.news1))
+        imageList.add(SlideModel(R.drawable.news2))
+        imageList.add(SlideModel(R.drawable.news3))
+
+        val imageSlider = findViewById<ImageSlider>(R.id.image_slider)
+
+        imageSlider.setImageList(imageList)
+        imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
     }
 }

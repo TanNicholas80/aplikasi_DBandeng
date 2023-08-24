@@ -1,7 +1,13 @@
 package com.example.dbandeng
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 
@@ -41,5 +47,35 @@ class landing_page_profile : AppCompatActivity() {
                 }
             }
         }
+        // setup pop up edit
+        val btnEditUser : Button = findViewById(R.id.Edit_User)
+        btnEditUser.setOnClickListener {
+            showEditPopUp()
+        }
+    }
+
+    private fun showEditPopUp() {
+        val editPopUp = Dialog(this)
+        editPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        editPopUp.setCancelable(false)
+        editPopUp.setContentView(R.layout.layout_popup_edit)
+        editPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val editNamaUser : EditText = findViewById(R.id.Edit_Nama_User)
+        val editAlamatUser : EditText = findViewById(R.id.Edit_Alamat_User)
+        val editNoHpUser : EditText = findViewById(R.id.Edit_No_Hp_User)
+        val editEmailUser: EditText = findViewById(R.id.Edit_Email_User)
+        val btnSaveEdit : Button = findViewById(R.id.Btn_Simpan_Edit)
+        val btnBatalEdit : Button = findViewById(R.id.Btn_Batal_Edit)
+
+        btnSaveEdit.setOnClickListener {
+
+        }
+
+        btnBatalEdit.setOnClickListener {
+            editPopUp.dismiss()
+        }
+
+        editPopUp.show()
     }
 }

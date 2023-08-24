@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
     >
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/image_slider"
+            app:iss_corner_radius="14"
+            android:layout_marginHorizontal="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:iss_auto_cycle="true"
+            app:iss_period="1000"
+            app:iss_delay="1000"
+            app:iss_no_dots="true"
+            app:iss_title_background="@drawable/title_holder_news"
+            app:iss_text_align="CENTER"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/news_recycle"
             android:layout_width="match_parent"
