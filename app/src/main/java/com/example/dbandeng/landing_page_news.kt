@@ -3,13 +3,19 @@ package com.example.dbandeng
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import com.example.dbandeng.modul.ModulNews
 
 class landing_page_news : AppCompatActivity() {
+    var recyclerView: RecyclerView? = null
+    var modulNewsDump: ModulNews? = null
+    var NewsArrayList = ArrayList<ModulNews>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_news)
-
+        // Setup Meow Button
         val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_not_active))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.product_icon))
@@ -38,5 +44,14 @@ class landing_page_news : AppCompatActivity() {
                 }
             }
         }
+        // Setup Recyclerview
+        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM", "18/10/2021")
+        for (i in 0..14) {
+            NewsArrayList.add(modulNewsDump)
+        }
+        recyclerView = findViewById(R.id.news_recycle)
+        recyclerView?.setLayoutManager(LinearLayoutManager(this))
+        val adaptorNews = landing_AdaptorNews(NewsArrayList)
+        recyclerView?.setAdapter(adaptorNews)
     }
 }

@@ -21,6 +21,7 @@
                 android:orientation="vertical"
             >
                 <ImageView
+                    android:id="@+id/landing_img_news"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                 />
@@ -45,6 +46,7 @@
                             android:src="@drawable/calendar"
                         />
                         <TextView
+                            android:id="@+id/landing_tgl_news"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="3dp"
@@ -53,6 +55,7 @@
                         />
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/landing_judul_news"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
