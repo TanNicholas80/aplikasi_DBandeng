@@ -9,7 +9,10 @@ class landing_page_profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_profile)
-
+        // Setup support Action button
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = "Beranda"
+        // Setup Meow Button
         val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_not_active))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.product_icon))

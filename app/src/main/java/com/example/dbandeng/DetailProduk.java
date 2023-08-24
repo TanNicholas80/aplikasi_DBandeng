@@ -20,7 +20,10 @@ public class DetailProduk extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_produk);
-
+        // setup Action Bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Produk");
+        // setup recycler
         for (int i = 0; i < 15; i++){
             imageArrayList.add("ABC");
         }
