@@ -1,4 +1,4 @@
-package com.example.dbandeng;
+package com.example.dbandeng.adaptor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dbandeng.R;
 import com.example.dbandeng.modul.ModulProduk;
 
 import java.util.ArrayList;
