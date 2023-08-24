@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.dbandeng.adaptor.CRUD_AdaptorProduk;
 import com.example.dbandeng.modul.ModulProduk;
 
 import java.util.ArrayList;
