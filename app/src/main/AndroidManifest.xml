@@ -56,10 +56,10 @@
         </activity>
         <activity
             android:name=".landing_page_news"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".landing_page_product"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".CRUD_Product"
             android:exported="true">

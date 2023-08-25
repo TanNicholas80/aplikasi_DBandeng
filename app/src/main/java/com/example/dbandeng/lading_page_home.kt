@@ -3,14 +3,17 @@ package com.example.dbandeng
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.AnimationTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 
 class lading_page_home : AppCompatActivity() {
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lading_page_home)
-
+        // setup bottom Navigation
         val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_icon_solid))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.product_icon))
@@ -36,5 +39,16 @@ class lading_page_home : AppCompatActivity() {
                 }
             }
         }
+        // setup image slider
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+        imageList.add(SlideModel(R.drawable.news1))
+        imageList.add(SlideModel(R.drawable.news2))
+        imageList.add(SlideModel(R.drawable.news3))
+
+        val imageSlider = findViewById<ImageSlider>(R.id.image_slider_home)
+
+        imageSlider.setImageList(imageList)
+        imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
     }
 }

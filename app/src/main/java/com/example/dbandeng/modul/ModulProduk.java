@@ -1,9 +1,10 @@
 package com.example.dbandeng.modul;
 
 public class ModulProduk {
-    String id_produk, nama_produk, keterangan_produk, stok_produk, harga_produk;
-    public ModulProduk(String id_produk, String nama_produk, String keterangan_produk, String stok_produk, String harga_produk) {
+    String id_produk, nama_produk, nama_mitra, keterangan_produk, stok_produk, harga_produk;
+    public ModulProduk(String id_produk, String nama_produk, String nama_mitra, String keterangan_produk, String stok_produk, String harga_produk) {
         this.id_produk = id_produk;
+        this.nama_mitra = nama_mitra;
         this.nama_produk = nama_produk;
         this.keterangan_produk = keterangan_produk;
         this.stok_produk = stok_produk;
@@ -24,6 +25,14 @@ public class ModulProduk {
 
     public void setNama_produk(String nama_produk) {
         this.nama_produk = nama_produk;
+    }
+
+    public String getNama_mitra() {
+        return nama_mitra;
+    }
+
+    public void setNama_mitra(String nama_mitra) {
+        this.nama_mitra = nama_mitra;
     }
 
     public String getKeterangan_produk() {
