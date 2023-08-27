@@ -6,124 +6,130 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".lading_page_home">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="match_parent" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="15dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-        >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="D'BANDENG"
-                android:fontFamily="@font/poppins_bold"
-                android:textColor="#39ADFF"
-                android:textSize="26dp"
-            />
-            <RelativeLayout
-                android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:paddingHorizontal="15dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+            >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_toStartOf="@+id/nama_user_home" android:text="Hai"/>
-                <TextView
-                    android:id="@+id/nama_user_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@+id/foto_profile_home"
-                    android:text="Nama Anda"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Selamat Datang"
-                    android:layout_marginEnd="10dp"
-                    android:layout_below="@+id/nama_user_home"
-                    android:layout_toLeftOf="@id/foto_profile_home"
+                    android:text="D'BANDENG"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="#39ADFF"
+                    android:textSize="26dp"
                 />
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/foto_profile_home"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/profile_users"
-                />
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_gravity="start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_toStartOf="@+id/nama_user_home" android:text="Hai"/>
+                    <TextView
+                        android:id="@+id/nama_user_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@+id/foto_profile_home"
+                        android:text="Nama Anda"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selamat Datang"
+                        android:layout_marginEnd="10dp"
+                        android:layout_below="@+id/nama_user_home"
+                        android:layout_toLeftOf="@id/foto_profile_home"
+                    />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/foto_profile_home"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/profile_users"
+                    />
+                </RelativeLayout>
+            </LinearLayout>
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider_home"
+                app:iss_corner_radius="14"
+                android:layout_marginHorizontal="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:iss_auto_cycle="true"
+                app:iss_period="1000"
+                app:iss_delay="1000"
+                app:iss_no_dots="true"
+                app:iss_text_align="CENTER"/>
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Produk Baru"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="20dp"
+            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_produk_baru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Berita Terkini"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="20dp"
+            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_berita_terbaru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mitra Kami"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="24dp"
+                android:layout_gravity="center"
+            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_mitra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
         </LinearLayout>
-        <com.denzcoskun.imageslider.ImageSlider
-            android:id="@+id/image_slider_home"
-            app:iss_corner_radius="14"
-            android:layout_marginHorizontal="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:iss_auto_cycle="true"
-            app:iss_period="1000"
-            app:iss_delay="1000"
-            app:iss_no_dots="true"
-            app:iss_text_align="CENTER"/>
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Produk Baru"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="20dp"
-        />
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Berita Terkini"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="20dp"
-        />
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mitra Kami"
-            android:fontFamily="@font/poppins_semibold"
-            android:textSize="24dp"
-            android:layout_gravity="center"
-        />
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-    </LinearLayout>
-
+    </ScrollView>
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

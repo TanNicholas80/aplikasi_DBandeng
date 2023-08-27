@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".DetailBerita"
     android:padding="10dp">
+    <include
+        android:id="@+id/toolbar_detail_berita"
+        layout="@layout/toolbar"
+    />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

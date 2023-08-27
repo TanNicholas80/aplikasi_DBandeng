@@ -44,7 +44,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{
-        TextView nama_produk, keterangan_produk, stok_produk, rate_produk;
+        TextView nama_produk, keterangan_produk, stok_produk;
         ImageView foto_produk;
 
         public myViewHolder(@NonNull View itemView){

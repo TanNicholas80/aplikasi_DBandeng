@@ -9,13 +9,18 @@ import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 
 class landing_page_profile : AppCompatActivity() {
+    private lateinit var profileToolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_profile)
         // Setup support Action button
+        profileToolbar = findViewById(R.id.profile_toolbar)
+        setSupportActionBar(profileToolbar)
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Beranda"
         // Setup Meow Button

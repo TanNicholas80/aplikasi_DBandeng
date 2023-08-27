@@ -1,4 +1,4 @@
-package com.example.dbandeng;
+package com.example.dbandeng.adaptor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.dbandeng.R;
 import com.example.dbandeng.modul.ModulNews;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNew
     public void onBindViewHolder(@NonNull landing_AdaptorNews.myViewHolder holder, int position) {
         holder.judul_article.setText(NewsArrayList.get(position).getJudul_article());
         holder.tanggal_buat.setText(NewsArrayList.get(position).getTanggal_buat_article());
+        holder.foto_article.setImageResource(R.drawable.news1);
     }
 
     @Override

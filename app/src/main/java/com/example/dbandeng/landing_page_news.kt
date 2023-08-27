@@ -9,6 +9,7 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.AnimationTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulNews
 
 class landing_page_news : AppCompatActivity() {
