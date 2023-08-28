@@ -56,13 +56,19 @@
         </activity>
         <activity
             android:name=".landing_page_news"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".lading_page_home"
+        />
         <activity
             android:name=".landing_page_product"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".lading_page_home"
+        />
         <activity
             android:name=".CRUD_Product"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".Beranda"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,7 +77,9 @@
         </activity>
         <activity
             android:name=".kelola_iot"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".Beranda"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,7 +97,9 @@
         </activity>
         <activity
             android:name=".hasil_iot"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".Beranda"
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

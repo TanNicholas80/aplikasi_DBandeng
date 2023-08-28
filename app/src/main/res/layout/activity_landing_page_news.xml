@@ -6,11 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".landing_page_news">
+    <include
+        android:id="@+id/news_toolbar"
+        layout="@layout/toolbar"
+    />
     <LinearLayout
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
     >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Berita Terbaru"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="#347CE1"
+            android:textSize="24dp"
+            android:layout_marginBottom="10dp"
+        />
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
             app:iss_corner_radius="14"
@@ -23,6 +38,17 @@
             app:iss_no_dots="true"
             app:iss_title_background="@drawable/title_holder_news"
             app:iss_text_align="CENTER"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Berita"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="#347CE1"
+            android:textSize="24dp"
+            android:layout_marginBottom="10dp"
+        />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/news_recycle"
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.dbandeng.R;
+import com.example.dbandeng.modul.ModulNews;
 import com.example.dbandeng.modul.ModulProduk;
 
 import java.util.ArrayList;
@@ -18,6 +19,12 @@ public class Adaptor_Product extends RecyclerView.Adapter<Adaptor_Product.myView
     public Adaptor_Product(ArrayList<ModulProduk> produkArrayList) {
         this.produkArrayList = produkArrayList;
     }
+
+    public void onApplySearch(ArrayList<ModulProduk> produkArrayList) {
+        this.produkArrayList = produkArrayList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Adaptor_Product.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

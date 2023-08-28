@@ -2,7 +2,13 @@ package com.example.dbandeng
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.ImageSlider
@@ -11,14 +17,22 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulNews
+import java.util.*
 
 class landing_page_news : AppCompatActivity() {
     var recyclerView: RecyclerView? = null
     var modulNewsDump: ModulNews? = null
     var NewsArrayList = ArrayList<ModulNews>()
+    private lateinit var NewsToolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_news)
+        // setup toolbar
+        NewsToolbar = findViewById(R.id.news_toolbar)
+        setSupportActionBar(NewsToolbar)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title = "Beranda"
         // Setup Meow Button
         val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_not_active))
@@ -68,5 +82,40 @@ class landing_page_news : AppCompatActivity() {
 
         imageSlider.setImageList(imageList)
         imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
+    }
+    // setup search bar pada action bar
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val adaptorNews = landing_AdaptorNews(NewsArrayList)
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_dbandeng, menu)
+        val menuItem: MenuItem = menu!!.findItem(R.id.search_bar)
+        val searchView: SearchView = menuItem.actionView as SearchView
+        searchView.queryHint = "Cari Berita ..."
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val searchList = ArrayList<ModulNews>()
+
+                if(newText != null) {
+                    for (i in NewsArrayList) {
+                        if (i.judul_article.lowercase(Locale.ROOT).contains(newText)) {
+                            searchList.add(i)
+                        }
+                    }
+                    if (searchList.isEmpty()) {
+                        Toast.makeText(this@landing_page_news, "Data Artikel Tidak Ditemukan", Toast.LENGTH_SHORT).show()
+                    } else {
+                        adaptorNews.onApplySearch(searchList)
+                    }
+                }
+                return true
+            }
+
+        })
+        return true
     }
 }

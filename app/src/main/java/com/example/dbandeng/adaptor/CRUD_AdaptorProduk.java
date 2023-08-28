@@ -29,6 +29,11 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
         return new CRUD_AdaptorProduk.myViewHolder(view);
     }
 
+    public void onApplySearch(ArrayList<ModulProduk> produkArrayList) {
+        this.produkArrayList = produkArrayList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull CRUD_AdaptorProduk.myViewHolder holder, int position) {
         holder.nama_produk.setText(produkArrayList.get(position).getNama_produk());

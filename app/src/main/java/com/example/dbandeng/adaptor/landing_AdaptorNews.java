@@ -19,6 +19,11 @@ public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNew
         this.NewsArrayList = NewsArrayList;
     }
 
+    public void onApplySearch(ArrayList<ModulNews> NewsArrayList) {
+        this.NewsArrayList = NewsArrayList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public landing_AdaptorNews.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

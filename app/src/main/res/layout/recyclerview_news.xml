@@ -40,18 +40,13 @@
                         android:layout_marginTop="5dp"
                         android:orientation="horizontal"
                     >
-                        <ImageView
-                            android:layout_width="10dp"
-                            android:layout_height="10dp"
-                            android:src="@drawable/calendar"
-                        />
                         <TextView
                             android:id="@+id/landing_tgl_news"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="10dp"
                             android:text="19/08/2023"
-                            android:textSize="8dp"
+                            android:textSize="10dp"
                         />
                     </LinearLayout>
                     <TextView

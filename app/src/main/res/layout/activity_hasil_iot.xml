@@ -6,45 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".hasil_iot">
+    <include
+        android:id="@+id/hasil_iot_toolbar"
+        layout="@layout/toolbar"
+    />
     <LinearLayout
+        android:layout_marginTop="65dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
     >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-        >
-            <ImageButton
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/arrow_back"
-                android:layout_gravity="center"
-            />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hasil IOT"
-                android:textSize="28dp"
-                android:layout_gravity="center"
-                android:fontFamily="@font/poppins_semibold"
-            />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-            >
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/icon_user"
-                />
-            </LinearLayout>
-        </LinearLayout>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="150dp"
