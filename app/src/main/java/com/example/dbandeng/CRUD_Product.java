@@ -28,7 +28,7 @@ public class CRUD_Product extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crud_product);
         // setup Data RecyclerView
-        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "20", "50000") ;
+        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
         for (int i = 0; i < 15; i++){
             produkArrayList.add(modulProdukDump);
         }

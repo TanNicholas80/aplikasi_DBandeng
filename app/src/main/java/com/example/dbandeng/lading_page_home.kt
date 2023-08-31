@@ -65,7 +65,7 @@ class lading_page_home : AppCompatActivity() {
         imageSlider.setImageList(imageList)
         imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
         // setup recyclerview Product
-        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10.000")
+        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10","18000")
         for (i in 0..14) {
             ProdukArrayList.add(modulProdukDump)
         }
@@ -75,7 +75,7 @@ class lading_page_home : AppCompatActivity() {
         val adaptorProduk = Adaptor_Product(ProdukArrayList)
         recyclerView?.setAdapter(adaptorProduk)
         // setup recyclerview News
-        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM", "18/10/2021")
+        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
         for (i in 0..14) {
             NewsArrayList.add(modulNewsDump)
         }
@@ -85,7 +85,7 @@ class lading_page_home : AppCompatActivity() {
         val adaptorNews = landing_AdaptorNews(NewsArrayList)
         recyclerView?.setAdapter(adaptorNews)
         // setup recyclerview Mitra
-        val modulMitraDump = ModulMitra("1", "nicholas", "Juwana", "laki", "082134081040", "Jl.Situ Aja", "admin@gmail.com", "Nicholas123")
+        val modulMitraDump = ModulMitra("1", "nicholas", "Juwana", "laki", "082134081040", "Jl.Situ Aja", "admin@gmail.com", "Nicholas123", "")
         for (i in 0..14) {
             MitraArrayList.add(modulMitraDump)
         }
