@@ -1,12 +1,13 @@
 package com.example.dbandeng.modul;
 
 public class ModulMitra {
-    String id_Mitra, nama_lengkap, nama_mitra, jkel, no_hp, alamat, email, password;
+    String id_Mitra, nama_lengkap, nama_mitra, foto_mitra, jkel, no_hp, alamat, email, password;
 
-    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String jkel, String no_hp, String alamat, String email, String password) {
+    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password) {
         this.id_Mitra = id_Mitra;
         this.nama_lengkap = nama_lengkap;
         this.nama_mitra = nama_mitra;
+        this.foto_mitra = foto_mitra;
         this.jkel = jkel;
         this.no_hp = no_hp;
         this.alamat = alamat;
@@ -36,6 +37,14 @@ public class ModulMitra {
 
     public void setNama_mitra(String nama_mitra) {
         this.nama_mitra = nama_mitra;
+    }
+
+    public String getFoto_mitra() {
+        return foto_mitra;
+    }
+
+    public void setFoto_mitra(String foto_mitra) {
+        this.foto_mitra = foto_mitra;
     }
 
     public String getJkel() {
