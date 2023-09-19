@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class koneksiAPI {
-    public static final String url_base="http://192.168.1.3:8000/";
+    public static final String url_base="https://api2.dbandeng.online/api/";
     private static Retrofit retrofit;
     public static Retrofit Koneksi()
     {

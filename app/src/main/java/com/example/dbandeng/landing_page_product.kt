@@ -53,7 +53,7 @@ class landing_page_product : AppCompatActivity() {
                 }
             }
         }
-        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10.000")
+        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10.000", "")
         for (i in 0..14) {
             ProdukArrayList.add(modulProdukDump)
         }

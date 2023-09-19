@@ -2,7 +2,8 @@ package com.example.dbandeng.modul;
 
 public class ModulMitra {
     String id_Mitra, nama_lengkap, nama_mitra, foto_mitra, jkel, no_hp, alamat, email, password;
-
+    private String token;
+    private String response;
     public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password) {
         this.id_Mitra = id_Mitra;
         this.nama_lengkap = nama_lengkap;
@@ -85,5 +86,17 @@ public class ModulMitra {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getResponse() { return response; }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

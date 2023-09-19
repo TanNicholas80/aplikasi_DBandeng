@@ -2,7 +2,9 @@ package com.example.dbandeng;
 
 import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulUser;
+import com.example.dbandeng.response.LoginRequest;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -10,7 +12,7 @@ import retrofit2.http.POST;
 public interface InterfaceDbandeng {
     // Login Mitra
     @FormUrlEncoded
-    @POST("api/v2/login")
+    @POST("v2/login")
     Call<ModulMitra> loginMitra (@Field("email") String email,
                                  @Field("password") String password);
     // Register User

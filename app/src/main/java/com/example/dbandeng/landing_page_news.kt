@@ -63,7 +63,7 @@ class landing_page_news : AppCompatActivity() {
             }
         }
         // Setup Recyclerview
-        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM", "18/10/2021")
+        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM", "18/10/2021", "")
         for (i in 0..14) {
             NewsArrayList.add(modulNewsDump)
         }
