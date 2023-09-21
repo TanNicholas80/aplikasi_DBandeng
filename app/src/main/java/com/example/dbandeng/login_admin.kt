@@ -2,6 +2,7 @@ package com.example.dbandeng
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -40,7 +41,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                 override fun onResponse(call: Call<ModulMitra>, response: Response<ModulMitra>) {
                     if (response.isSuccessful) {
                         val modulMitra: ModulMitra? = response.body()
-                        val AuthToken = modulMitra?.getToken()
+                        val AuthToken = modulMitra?.getToken().toString()
                         val rep = modulMitra?.getResponse()
 
                         val loginRequest = LoginRequest()
@@ -61,11 +62,13 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
 
                         startActivity(loginAdmin_layout);
                     } else {
+
                         Toast.makeText(this@login_admin, "Gagal Login", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<ModulMitra>, t: Throwable) {
+                    Log.d("loginAdmin", t.message.toString());
                     Toast.makeText(this@login_admin, "Gagal" + t.message, Toast.LENGTH_SHORT).show()
                 }
             })
