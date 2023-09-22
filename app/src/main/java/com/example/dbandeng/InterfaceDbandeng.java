@@ -3,11 +3,16 @@ package com.example.dbandeng;
 import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulUser;
 import com.example.dbandeng.response.LoginRequest;
+import com.example.dbandeng.response.ProfilMitraResponse;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface InterfaceDbandeng {
     // Login Mitra
@@ -33,4 +38,8 @@ public interface InterfaceDbandeng {
                               @Field("email") String email,
                               @Field("no_user") String no_user,
                               @Field("alamatUser") String alamatUser);
+
+    //Get Mitra Profile
+    @GET("v1/mitra/read/{id}")
+    Call<ProfilMitraResponse> getMitra(@Header("Authorization") String token, @Path("id") String id);
 }

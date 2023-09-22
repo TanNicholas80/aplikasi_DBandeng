@@ -5,21 +5,51 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import com.example.dbandeng.modul.ModulMitra
+import com.example.dbandeng.modul.ModulUser
+import com.example.dbandeng.response.ProfilMitraResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class landing_page_profile : AppCompatActivity() {
+
     private lateinit var profileToolbar: Toolbar
+    lateinit var namaUser: TextView
+    lateinit var emailUser: TextView
+    lateinit var alamatUser: TextView
+    lateinit var jenisKel: TextView
+    lateinit var tglLahir: TextView
+    lateinit var hpUser: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_profile)
         // Setup support Action button
         profileToolbar = findViewById(R.id.profile_toolbar)
         setSupportActionBar(profileToolbar)
+
+        namaUser = findViewById(R.id.Nama_User)
+        emailUser = findViewById(R.id.Email_User)
+        alamatUser = findViewById(R.id.Alamat_User)
+        hpUser = findViewById(R.id.No_Hp_User)
+        jenisKel = findViewById(R.id.JenisKel_User)
+        tglLahir = findViewById(R.id.tanggalLahir_User)
+
+
+        val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
+        val authToken : String? = preferences.getString("auth_token", null);
+        val idMitra : String? = preferences.getString("id_mitra", null);
+        getMitraDataProfile("Bearer " + authToken,idMitra)
+
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Beranda"
@@ -45,11 +75,6 @@ class landing_page_profile : AppCompatActivity() {
                     val news_page_layout = Intent(this@landing_page_profile, landing_page_news::class.java);
                     startActivity(news_page_layout)
                 }
-
-                4 -> {
-                    val profile_user_layout = Intent(this@landing_page_profile, landing_page_profile::class.java);
-                    startActivity(profile_user_layout)
-                }
             }
         }
         // setup pop up edit
@@ -57,6 +82,36 @@ class landing_page_profile : AppCompatActivity() {
         btnEditUser.setOnClickListener {
             showEditPopUp()
         }
+    }
+
+    private fun getMitraDataProfile(authToken: String?, idMitra: String?){
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        val getDataMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.getMitra(authToken, idMitra )
+        Log.d("cekToken", authToken + " -- " + idMitra);
+        getDataMitra?.enqueue(object : Callback<ProfilMitraResponse> {
+            override fun onResponse(call: Call<ProfilMitraResponse>, response: Response<ProfilMitraResponse>) {
+                if (response.isSuccessful) {
+                    val res: ProfilMitraResponse? = response.body()
+                    val modulMitra : ModulMitra? = res?.getModulMitra()
+                    namaUser.setText(modulMitra?.nama_mitra)
+                    alamatUser.setText(modulMitra?.alamat)
+                    jenisKel.setText(modulMitra?.jkel)
+                    hpUser.setText(modulMitra?.no_hp)
+                    emailUser.setText(modulMitra?.email)
+                    tglLahir.setText(modulMitra?.tglLahir)
+
+                    Toast.makeText(this@landing_page_profile, "Berhasil Login user", Toast.LENGTH_LONG).show()
+
+                } else {
+
+                    Toast.makeText(this@landing_page_profile, "Gagal Login", Toast.LENGTH_LONG).show()
+                }
+            }
+            override fun onFailure(call: Call<ProfilMitraResponse>, t: Throwable) {
+                Log.d("RegisUser", t.message.toString());
+                Toast.makeText(this@landing_page_profile, "Gagal" + t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun showEditPopUp() {

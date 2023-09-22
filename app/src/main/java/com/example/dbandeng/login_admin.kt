@@ -41,7 +41,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                 override fun onResponse(call: Call<ModulMitra>, response: Response<ModulMitra>) {
                     if (response.isSuccessful) {
                         val modulMitra: ModulMitra? = response.body()
-                        val AuthToken = modulMitra?.getToken().toString()
+                        val AuthToken = modulMitra?.getToken()
                         val rep = modulMitra?.getResponse()
 
                         val loginRequest = LoginRequest()
@@ -53,12 +53,13 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                         val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
                         val editor = preferences.edit()
                         editor.putString("auth_token", AuthToken)
+                        editor.putString("id_mitra", modulMitra?.id_Mitra)
                         editor.apply()
                         val textToaster = rep
                         print(textToaster)
                         print(AuthToken)
                         Toast.makeText(this@login_admin, "${textToaster}", Toast.LENGTH_LONG).show()
-                        val loginAdmin_layout = Intent(this@login_admin, Beranda::class.java);
+                        val loginAdmin_layout = Intent(this@login_admin, landing_page_profile::class.java);// ntar ganti beranda lagi
 
                         startActivity(loginAdmin_layout);
                     } else {

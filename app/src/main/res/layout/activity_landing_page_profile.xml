@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".landing_page_profile">
+
+    tools:context=".landing_page_profile"
+    >
     <include
         android:id="@+id/profile_toolbar"
         layout="@layout/toolbar"
     />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_marginTop="65dp"
         android:layout_width="match_parent"
@@ -23,6 +29,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/profile_users" />
         <TextView
+            android:id="@+id/nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama :"
+                android:text="Nama Lengkap :"
                 android:textSize="16dp"
                 android:fontFamily="@font/poppins_semibold"
             />
@@ -51,7 +58,7 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Bang Chad"
+                android:text=""
             />
             <Space
                 android:layout_width="match_parent"
@@ -72,12 +79,54 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Jl. Situ Aja no 16"
+                android:text=""
             />
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
             />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Lahir :"
+                android:textSize="16dp"
+                android:fontFamily="@font/poppins_semibold"
+                />
+            <TextView
+                android:id="@+id/tanggalLahir_User"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/highlited_profile"
+                android:paddingLeft="15dp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text=""
+                />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin :"
+                android:textSize="16dp"
+                android:fontFamily="@font/poppins_semibold"
+                />
+            <TextView
+                android:id="@+id/JenisKel_User"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/highlited_profile"
+                android:paddingLeft="15dp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text=""
+                />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +142,7 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="082134081040"
+                android:text=""
             />
             <Space
                 android:layout_width="match_parent"
@@ -114,7 +163,7 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Tannicholas54@gmail.com"
+                android:text=""
             />
             <Space
                 android:layout_width="match_parent"
@@ -149,6 +198,7 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/bottomNavigation"
