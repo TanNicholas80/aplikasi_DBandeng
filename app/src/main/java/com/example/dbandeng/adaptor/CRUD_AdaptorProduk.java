@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dbandeng.R;
 import com.example.dbandeng.modul.ModulProduk;
+import com.example.dbandeng.modul.ModulProdukNew;
 
 import java.util.ArrayList;
 
 public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.myViewHolder> {
-    ArrayList<ModulProduk> produkArrayList;
-    public CRUD_AdaptorProduk(ArrayList<ModulProduk> produkArrayList) {
+    ArrayList<ModulProdukNew> produkArrayList;
+    public CRUD_AdaptorProduk(ArrayList<ModulProdukNew> produkArrayList) {
         this.produkArrayList = produkArrayList;
     }
     @NonNull
@@ -29,16 +30,17 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
         return new CRUD_AdaptorProduk.myViewHolder(view);
     }
 
-    public void onApplySearch(ArrayList<ModulProduk> produkArrayList) {
+    public void onApplySearch(ArrayList<ModulProdukNew> produkArrayList) {
         this.produkArrayList = produkArrayList;
         notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(@NonNull CRUD_AdaptorProduk.myViewHolder holder, int position) {
-        holder.nama_produk.setText(produkArrayList.get(position).getNama_produk());
-        holder.keterangan_produk.setText("Ukuran : " + produkArrayList.get(position).getKeterangan_produk());
-        holder.stok_produk.setText("Stok : "+produkArrayList.get(position).getStok_produk());
+        holder.nama_produk.setText(produkArrayList.get(position).getNmProduk());
+        holder.keterangan_produk.setText("Ukuran : " + produkArrayList.get(position).getBeratProduk());
+        holder.stok_produk.setText("Stok : "+produkArrayList.get(position).getStok());
+        holder.harga_produk.setText("Rp." + produkArrayList.get(position).getHrgProduk());
         holder.foto_produk.setImageResource(R.drawable.ikan_kecil);
 
     }
@@ -49,7 +51,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{
-        TextView nama_produk, keterangan_produk, stok_produk;
+        TextView nama_produk, keterangan_produk, stok_produk, harga_produk;
         ImageView foto_produk;
 
         public myViewHolder(@NonNull View itemView){
@@ -58,6 +60,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
             keterangan_produk=itemView.findViewById(R.id.crud_keteranganProduk);
             stok_produk=itemView.findViewById(R.id.crud_stokProduk);
             foto_produk=itemView.findViewById(R.id.crud_imageProduk);
+            harga_produk=itemView.findViewById(R.id.crud_hargaProduk);
         }
     }
 }
