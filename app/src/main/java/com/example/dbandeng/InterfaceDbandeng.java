@@ -2,7 +2,9 @@ package com.example.dbandeng;
 
 import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulUser;
+import com.example.dbandeng.response.EditProfilMitraRes;
 import com.example.dbandeng.response.LoginRequest;
+import com.example.dbandeng.response.LogoutMitraRes;
 import com.example.dbandeng.response.ProfilMitraResponse;
 
 import retrofit2.Call;
@@ -46,9 +48,19 @@ public interface InterfaceDbandeng {
     // Edit Profile Mitra
     @FormUrlEncoded
     @POST("v1/mitra/edit/{id}")
-    Call<ProfilMitraResponse> editMitra(@Header("Authorization") String token, @Path("id") String id);
-
+    Call<EditProfilMitraRes> editMitra(@Header("Authorization") String token,
+                                       @Path("id") String id,
+                                       @Field("namaLengkap") String nama_lengkap,
+                                       @Field("alamatMitra") String alamat,
+                                       @Field("tglLahir") String tglLahir,
+                                       @Field("jeniskel") String jkel,
+                                       @Field("no_tlp") String no_hp);
     @FormUrlEncoded
     @POST("v1/mitra/edit-foto/{id}")
-    Call<ProfilMitraResponse> editFotoMitra(@Header("Authorization") String token, @Path("id") String id);
+    Call<ProfilMitraResponse> editFotoMitra(@Header("Authorization") String token,
+                                            @Path("id") String id,
+                                            @Field("foto_mitra") String foto_mitra);
+
+    @GET("v2/logout-mitra")
+    Call<LogoutMitraRes> logoutMitra(@Header("Authorization") String token);
 }

@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nama :"
+                    android:text="Nama Lengkap :"
                     android:textSize="16dp"
                     android:fontFamily="@font/poppins_semibold"
                 />

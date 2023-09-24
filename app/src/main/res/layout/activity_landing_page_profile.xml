@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
     tools:context=".landing_page_profile"
     >
     <include
@@ -15,9 +15,8 @@
     />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_marginTop="65dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,10 +24,8 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_user"
             android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="onCircleImageClick"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/profile_users" />
         <TextView
             android:id="@+id/namalengkap"
@@ -214,4 +211,4 @@
         app:mbn_rippleColor="#2f424242"
         app:mbn_selectedIconColor="#000000"
         app:mbn_shadowColor="#1f212121"  />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

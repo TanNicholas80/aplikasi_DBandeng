@@ -1,11 +1,13 @@
 package com.example.dbandeng
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.modul.ModulMitra
+import com.example.dbandeng.response.EditProfilMitraRes
+import com.example.dbandeng.response.LogoutMitraRes
 import com.example.dbandeng.response.ProfilMitraResponse
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -33,6 +37,9 @@ class landing_page_profile : AppCompatActivity() {
     lateinit var jenisKel: TextView
     lateinit var tglLahir: TextView
     lateinit var hpUser: TextView
+    lateinit var modulMitra : ModulMitra
+    lateinit var authToken : String
+    lateinit var idMitra : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_profile)
@@ -50,9 +57,9 @@ class landing_page_profile : AppCompatActivity() {
 
 
         val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-        val authToken : String? = preferences.getString("auth_token", null);
-        val idMitra : String? = preferences.getString("id_mitra", null);
-        getMitraDataProfile("Bearer " + authToken,idMitra)
+        authToken = preferences.getString("auth_token", null).toString();
+        idMitra = preferences.getString("id_mitra", null).toString();
+        getMitraDataProfile("Bearer " + authToken, idMitra)
 
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -84,10 +91,15 @@ class landing_page_profile : AppCompatActivity() {
         // setup pop up edit
         val btnEditUser : Button = findViewById(R.id.Edit_User)
         btnEditUser.setOnClickListener {
-            val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-            val authToken : String? = preferences.getString("auth_token", null);
-            val idMitra : String? = preferences.getString("id_mitra", null);
-            showEditPopUp("Bearer " + authToken, idMitra)
+            authToken = preferences.getString("auth_token", null).toString();
+            idMitra = preferences.getString("id_mitra", null).toString();
+            showEditPopUp(this, "Bearer " + authToken, idMitra)
+        }
+
+        val btnLogoutUser : Button = findViewById(R.id.Logout_User)
+        btnLogoutUser.setOnClickListener {
+            authToken = preferences.getString("auth_token", null).toString();
+            logoutMitra("Bearer " + authToken)
         }
     }
 
@@ -99,7 +111,9 @@ class landing_page_profile : AppCompatActivity() {
             override fun onResponse(call: Call<ProfilMitraResponse>, response: Response<ProfilMitraResponse>) {
                 if (response.isSuccessful) {
                     val res: ProfilMitraResponse? = response.body()
-                    val modulMitra : ModulMitra? = res?.getModulMitra()
+                    if (res != null) {
+                        modulMitra = res.getModulMitra()
+                    }
                     val ImageUrl = modulMitra?.foto_mitra
                     Picasso.get().load(ImageUrl).into(foto_mitra)
                     namaLengkap.setText(modulMitra?.nama_lengkap)
@@ -124,39 +138,109 @@ class landing_page_profile : AppCompatActivity() {
         })
     }
 
-    private fun showEditPopUp(authToken: String?, idMitra: String?) {
-        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
-        val EditDataMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.editMitra(authToken, idMitra )
-        val editPopUp = Dialog(this)
+    private fun showEditPopUp(context: Context, authToken: String?, idMitra: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val editPopUp = Dialog(context)
         editPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
         editPopUp.setCancelable(false)
         editPopUp.setContentView(R.layout.layout_popup_edit)
+        editPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         editPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
+        // Menyimpan Value Edit
         // val editFotoUser : CircleImageView = findViewById(R.id.Edit_Foto_Mitra)
-        val editNamaLengkap : EditText = findViewById(R.id.Edit_Nama_Mitra)
-        val editAlamatMitra : EditText = findViewById(R.id.Edit_Alamat_Mitra)
-        val editTglLahir: EditText = findViewById(R.id.Edit_Tgl_Lahir)
-        val editJenisKel: EditText = findViewById(R.id.Edit_Jenis_Kel)
-        val editNoHpMitra : EditText = findViewById(R.id.Edit_No_Hp_Mitra)
-        val btnSaveEdit : Button = findViewById(R.id.Btn_Simpan_Edit)
-        val btnBatalEdit : Button = findViewById(R.id.Btn_Batal_Edit)
+        val editNamaLengkap : EditText? = editPopUp.findViewById(R.id.Edit_Nama_Mitra)
+        Log.d("Edit Text CEK", editNamaLengkap.toString())
+        val editAlamatMitra : EditText? = editPopUp.findViewById(R.id.Edit_Alamat_Mitra)
+        val editTglLahir: EditText? = editPopUp.findViewById(R.id.Edit_Tgl_Lahir)
+        val editJenisKel: EditText? = editPopUp.findViewById(R.id.Edit_Jenis_Kel)
+        val editNoHpMitra : EditText? = editPopUp.findViewById(R.id.Edit_No_Hp_Mitra)
+        val btnSaveEdit : Button? = editPopUp.findViewById(R.id.Btn_Simpan_Edit)
+        val btnBatalEdit : Button? = editPopUp.findViewById(R.id.Btn_Batal_Edit)
+        editNamaLengkap?.setText(modulMitra?.getNama_lengkap())
+        Log.d("Cek", editNamaLengkap.toString())
+        Log.d("Id Mitra", idMitra.toString())
+        editAlamatMitra?.setText(modulMitra?.getAlamat())
+        editTglLahir?.setText(modulMitra?.getTglLahir())
+        editJenisKel?.setText(modulMitra?.getJkel())
+        editNoHpMitra?.setText(modulMitra?.getNo_hp())
+        // Hasil Edit Profile
+        val xNamaLengkap = editNamaLengkap?.text.toString()
+        val xAlamatMitra = editAlamatMitra?.text.toString()
+        val xTglLahir = editTglLahir?.text.toString()
+        val xJenisKel = editJenisKel?.text.toString()
+        val xNoHpMitra = editNoHpMitra?.text.toString()
+        Log.d("Nama Lengkap", xNamaLengkap)
+        val EditDataMitra: Call<EditProfilMitraRes>? = interfaceDbandeng?.editMitra(authToken, idMitra, xNamaLengkap, xAlamatMitra, xTglLahir, xJenisKel, xNoHpMitra )
+        btnSaveEdit?.setOnClickListener {
+            EditDataMitra?.enqueue(object : Callback<EditProfilMitraRes> {
+                override fun onResponse(call: Call<EditProfilMitraRes>, response: Response<EditProfilMitraRes>) {
+                    if(response.isSuccessful) {
+                        val res: EditProfilMitraRes? = response.body()
+                        val rep = res?.getResponse()
+                        val textToaster = rep
+                        Toast.makeText(this@landing_page_profile, "${textToaster}", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@landing_page_profile, "Profil Gagal Terupdate", Toast.LENGTH_LONG).show()
+                    }
+                }
 
-        btnSaveEdit.setOnClickListener {
-            
+                override fun onFailure(call: Call<EditProfilMitraRes>, t: Throwable) {
+                    Toast.makeText(this@landing_page_profile, "Profil Gagal Terupdate", Toast.LENGTH_LONG).show()
+                }
+
+            })
         }
 
-        btnBatalEdit.setOnClickListener {
+        btnBatalEdit?.setOnClickListener {
             editPopUp.dismiss()
         }
 
         editPopUp.show()
     }
 
-    private fun editFotoMitra(authToken: String?, idMitra: String?) {
-        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
-        val EditFotoMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.editMitra(authToken, idMitra)
+    private fun logoutMitra(authToken: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val LogoutMitra: Call<LogoutMitraRes>? = interfaceDbandeng?.logoutMitra(authToken)
 
+        LogoutMitra?.enqueue(object : Callback<LogoutMitraRes> {
+            override fun onResponse(call: Call<LogoutMitraRes>, response: Response<LogoutMitraRes>) {
+                if(response.isSuccessful) {
+                    val res : LogoutMitraRes? = response.body()
+                    val rep = res?.getResponse()
+                    val textToaster = rep
+                    Toast.makeText(this@landing_page_profile, "${textToaster}", Toast.LENGTH_LONG).show()
+                    val loginAdmin_layout = Intent(this@landing_page_profile, login_admin::class.java);// ntar ganti beranda lagi
 
+                    startActivity(loginAdmin_layout);
+                } else {
+                    Toast.makeText(this@landing_page_profile, "Logout Gagal", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<LogoutMitraRes>, t: Throwable) {
+                Toast.makeText(this@landing_page_profile, "Logout Mitra Gagal", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
+
+
+//    private fun editFotoMitra(authToken: String?, idMitra: String?) {
+//        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+//        fun onCircleImageClick(view: View) {
+//            ImagePicker.with(this)
+//                .galleryOnly()
+//                .crop()	    			//Crop image(Optional), Check Customization for more option
+//                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+//                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+//                .start()
+//        }
+//
+//        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//            super.onActivityResult(requestCode, resultCode, data)
+//            foto_mitra.setImageURI(data?.data)
+//        }
+//        val EditFotoMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.editFotoMitra(authToken, idMitra, )
+//
+//    }
 }
