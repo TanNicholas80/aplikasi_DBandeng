@@ -56,7 +56,8 @@ dependencies {
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
     // define a BOM and its version
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
-
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")

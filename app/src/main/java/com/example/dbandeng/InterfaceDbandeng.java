@@ -42,4 +42,13 @@ public interface InterfaceDbandeng {
     //Get Mitra Profile
     @GET("v1/mitra/read/{id}")
     Call<ProfilMitraResponse> getMitra(@Header("Authorization") String token, @Path("id") String id);
+
+    // Edit Profile Mitra
+    @FormUrlEncoded
+    @POST("v1/mitra/edit/{id}")
+    Call<ProfilMitraResponse> editMitra(@Header("Authorization") String token, @Path("id") String id);
+
+    @FormUrlEncoded
+    @POST("v1/mitra/edit-foto/{id}")
+    Call<ProfilMitraResponse> editFotoMitra(@Header("Authorization") String token, @Path("id") String id);
 }

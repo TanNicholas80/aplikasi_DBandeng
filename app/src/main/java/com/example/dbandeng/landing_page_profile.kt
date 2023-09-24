@@ -15,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.modul.ModulMitra
-import com.example.dbandeng.modul.ModulUser
 import com.example.dbandeng.response.ProfilMitraResponse
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +25,8 @@ import retrofit2.Response
 class landing_page_profile : AppCompatActivity() {
 
     private lateinit var profileToolbar: Toolbar
+    lateinit var foto_mitra: CircleImageView
+    lateinit var namaLengkap: TextView
     lateinit var namaUser: TextView
     lateinit var emailUser: TextView
     lateinit var alamatUser: TextView
@@ -36,7 +39,8 @@ class landing_page_profile : AppCompatActivity() {
         // Setup support Action button
         profileToolbar = findViewById(R.id.profile_toolbar)
         setSupportActionBar(profileToolbar)
-
+        foto_mitra = findViewById(R.id.profile_user)
+        namaLengkap = findViewById(R.id.namalengkap)
         namaUser = findViewById(R.id.Nama_User)
         emailUser = findViewById(R.id.Email_User)
         alamatUser = findViewById(R.id.Alamat_User)
@@ -80,7 +84,10 @@ class landing_page_profile : AppCompatActivity() {
         // setup pop up edit
         val btnEditUser : Button = findViewById(R.id.Edit_User)
         btnEditUser.setOnClickListener {
-            showEditPopUp()
+            val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
+            val authToken : String? = preferences.getString("auth_token", null);
+            val idMitra : String? = preferences.getString("id_mitra", null);
+            showEditPopUp("Bearer " + authToken, idMitra)
         }
     }
 
@@ -93,6 +100,9 @@ class landing_page_profile : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val res: ProfilMitraResponse? = response.body()
                     val modulMitra : ModulMitra? = res?.getModulMitra()
+                    val ImageUrl = modulMitra?.foto_mitra
+                    Picasso.get().load(ImageUrl).into(foto_mitra)
+                    namaLengkap.setText(modulMitra?.nama_lengkap)
                     namaUser.setText(modulMitra?.nama_mitra)
                     alamatUser.setText(modulMitra?.alamat)
                     jenisKel.setText(modulMitra?.jkel)
@@ -114,22 +124,26 @@ class landing_page_profile : AppCompatActivity() {
         })
     }
 
-    private fun showEditPopUp() {
+    private fun showEditPopUp(authToken: String?, idMitra: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        val EditDataMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.editMitra(authToken, idMitra )
         val editPopUp = Dialog(this)
         editPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
         editPopUp.setCancelable(false)
         editPopUp.setContentView(R.layout.layout_popup_edit)
         editPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val editNamaUser : EditText = findViewById(R.id.Edit_Nama_User)
-        val editAlamatUser : EditText = findViewById(R.id.Edit_Alamat_User)
-        val editNoHpUser : EditText = findViewById(R.id.Edit_No_Hp_User)
-        val editEmailUser: EditText = findViewById(R.id.Edit_Email_User)
+        // val editFotoUser : CircleImageView = findViewById(R.id.Edit_Foto_Mitra)
+        val editNamaLengkap : EditText = findViewById(R.id.Edit_Nama_Mitra)
+        val editAlamatMitra : EditText = findViewById(R.id.Edit_Alamat_Mitra)
+        val editTglLahir: EditText = findViewById(R.id.Edit_Tgl_Lahir)
+        val editJenisKel: EditText = findViewById(R.id.Edit_Jenis_Kel)
+        val editNoHpMitra : EditText = findViewById(R.id.Edit_No_Hp_Mitra)
         val btnSaveEdit : Button = findViewById(R.id.Btn_Simpan_Edit)
         val btnBatalEdit : Button = findViewById(R.id.Btn_Batal_Edit)
 
         btnSaveEdit.setOnClickListener {
-
+            
         }
 
         btnBatalEdit.setOnClickListener {
@@ -137,5 +151,12 @@ class landing_page_profile : AppCompatActivity() {
         }
 
         editPopUp.show()
+    }
+
+    private fun editFotoMitra(authToken: String?, idMitra: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        val EditFotoMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.editMitra(authToken, idMitra)
+
+
     }
 }

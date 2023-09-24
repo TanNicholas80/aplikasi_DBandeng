@@ -40,7 +40,7 @@
                     android:fontFamily="@font/poppins_semibold"
                 />
                 <EditText
-                    android:id="@+id/Edit_Nama_User"
+                    android:id="@+id/Edit_Nama_Mitra"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/highlited_profile"
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/poppins_semibold"
                 />
                 <EditText
-                    android:id="@+id/Edit_Alamat_User"
+                    android:id="@+id/Edit_Alamat_Mitra"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/highlited_profile"
@@ -77,19 +77,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nomor HP :"
-                    android:textSize="16dp"
+                    android:text="Tanggal Lahir :"
                     android:fontFamily="@font/poppins_semibold"
+                    android:textSize="16dp"
                 />
                 <EditText
-                    android:id="@+id/Edit_No_Hp_User"
+                    android:id="@+id/Edit_Tgl_Lahir"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/highlited_profile"
                     android:paddingLeft="15dp"
                     android:paddingVertical="8dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="082134081040"
+                    android:text="16-10-2003"
                 />
                 <Space
                     android:layout_width="match_parent"
@@ -98,19 +98,40 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email :"
+                    android:text="Jenis Kelamin :"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="16dp"
                 />
                 <EditText
-                    android:id="@+id/Edit_Email_User"
+                    android:id="@+id/Edit_Jenis_Kel"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/highlited_profile"
                     android:paddingLeft="15dp"
                     android:paddingVertical="8dp"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Tannicholas54@gmail.com"
+                    android:text="Laki-Laki"
+                />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor HP :"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/poppins_semibold"
+                />
+                <EditText
+                    android:id="@+id/Edit_No_Hp_Mitra"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/highlited_profile"
+                    android:paddingLeft="15dp"
+                    android:paddingVertical="8dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="082134081040"
                 />
                 <Space
                     android:layout_width="match_parent"

@@ -25,6 +25,7 @@ public class ModulMitra {
     String   nama_lengkap;
     @SerializedName("namaMitra")
     String    nama_mitra;
+    @SerializedName("foto_mitra")
     String    foto_mitra;
     @SerializedName("jeniskel")
     String    jkel;

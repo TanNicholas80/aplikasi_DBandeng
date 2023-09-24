@@ -27,9 +27,11 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onCircleImageClick"
             android:src="@drawable/profile_users" />
         <TextView
-            android:id="@+id/nama"
+            android:id="@+id/namalengkap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -46,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nama Lengkap :"
+                android:text="Nama Mitra :"
                 android:textSize="16dp"
                 android:fontFamily="@font/poppins_semibold"
             />
