@@ -85,10 +85,10 @@ class lading_page_home : AppCompatActivity() {
         val adaptorNews = landing_AdaptorNews(NewsArrayList)
         recyclerView?.setAdapter(adaptorNews)
         // setup recyclerview Mitra
-        val modulMitraDump = ModulMitra("1", "nicholas", "Juwana", "laki", "082134081040", "Jl.Situ Aja", "admin@gmail.com", "Nicholas123", "","")
-        for (i in 0..14) {
-            MitraArrayList.add(modulMitraDump)
-        }
+//        val modulMitraDump = ModulMitra("1", "nicholas", "Juwana", "laki", "082134081040", "Jl.Situ Aja", "admin@gmail.com", "Nicholas123", "","")
+//        for (i in 0..14) {
+//            MitraArrayList.add(modulMitraDump)
+//        }
         recyclerView = findViewById(R.id.recycler_mitra)
         val layoutManagerMitra = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = layoutManagerMitra

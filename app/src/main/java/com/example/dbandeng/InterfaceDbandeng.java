@@ -3,6 +3,7 @@ package com.example.dbandeng;
 import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulUser;
 import com.example.dbandeng.response.EditProfilMitraRes;
+import com.example.dbandeng.response.GetProductResponse;
 import com.example.dbandeng.response.LoginRequest;
 import com.example.dbandeng.response.LogoutMitraRes;
 import com.example.dbandeng.response.ProfilMitraResponse;
@@ -63,4 +64,7 @@ public interface InterfaceDbandeng {
 
     @GET("v2/logout-mitra")
     Call<LogoutMitraRes> logoutMitra(@Header("Authorization") String token);
+
+    @GET("product/read-mitra/{id}")
+    Call<GetProductResponse> getProdukMitra(@Header("Authorization") String token, @Path("id") String id);
 }

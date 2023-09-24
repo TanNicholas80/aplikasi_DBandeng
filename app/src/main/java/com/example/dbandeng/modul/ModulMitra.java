@@ -3,6 +3,9 @@ package com.example.dbandeng.modul;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Token {
     public String token;
 
@@ -37,12 +40,13 @@ public class ModulMitra {
     String   password;
     String tglLahir;
 
-
+    List<ModulProdukNew> products;
 
     public Token token;
     private String response;
 
-    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password, String tglLahir) {
+
+    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password, List<ModulProdukNew> products) {
         this.id_Mitra = id_Mitra;
         this.nama_lengkap = nama_lengkap;
         this.nama_mitra = nama_mitra;
@@ -52,21 +56,16 @@ public class ModulMitra {
         this.alamat = alamat;
         this.email = email;
         this.password = password;
-        this.tglLahir = tglLahir;
-        //this.token = token;
+        this.products = products;
     }
 
-//    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password) {
-//        this.id_Mitra = id_Mitra;
-//        this.nama_lengkap = nama_lengkap;
-//        this.nama_mitra = nama_mitra;
-//        this.foto_mitra = foto_mitra;
-//        this.jkel = jkel;
-//        this.no_hp = no_hp;
-//        this.alamat = alamat;
-//        this.email = email;
-//        this.password = password;
-//    }
+    public List<ModulProdukNew> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ModulProdukNew> products) {
+        this.products = products;
+    }
 
     public String getId_Mitra() {
         return id_Mitra;
