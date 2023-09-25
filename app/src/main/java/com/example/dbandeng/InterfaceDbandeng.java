@@ -2,20 +2,11 @@ package com.example.dbandeng;
 
 import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulUser;
-import com.example.dbandeng.response.EditProfilMitraRes;
-import com.example.dbandeng.response.GetProductResponse;
-import com.example.dbandeng.response.LoginRequest;
-import com.example.dbandeng.response.LogoutMitraRes;
-import com.example.dbandeng.response.ProfilMitraResponse;
+import com.example.dbandeng.response.*;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 public interface InterfaceDbandeng {
     // Login Mitra
@@ -67,4 +58,16 @@ public interface InterfaceDbandeng {
 
     @GET("product/read-mitra/{id}")
     Call<GetProductResponse> getProdukMitra(@Header("Authorization") String token, @Path("id") String id);
+    @Multipart
+    @FormUrlEncoded
+    @POST("product/mitraId")
+    Call<CreateProdukResponse> createProdukMitra(@Header("Authorization") String token,
+                                                 @Path("id") String id,
+                                                 @Field("nmProduk") String nmProduk,
+                                                 @Part("foto_produk") MultipartBody.Part foto_produk,
+                                                 @Field("hrgProduk") String hrgProduk,
+                                                 @Field("stok") String stok,
+                                                 @Field("beratProduk") String beratProduk,
+                                                 @Field("dskProduk") String dskProduk,
+                                                 @Field("link") String link);
 }

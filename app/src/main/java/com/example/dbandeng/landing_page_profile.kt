@@ -164,14 +164,14 @@ class landing_page_profile : AppCompatActivity() {
         editJenisKel?.setText(modulMitra?.getJkel())
         editNoHpMitra?.setText(modulMitra?.getNo_hp())
         // Hasil Edit Profile
-        val xNamaLengkap = editNamaLengkap?.text.toString()
-        val xAlamatMitra = editAlamatMitra?.text.toString()
-        val xTglLahir = editTglLahir?.text.toString()
-        val xJenisKel = editJenisKel?.text.toString()
-        val xNoHpMitra = editNoHpMitra?.text.toString()
-        Log.d("Nama Lengkap", xNamaLengkap)
-        val EditDataMitra: Call<EditProfilMitraRes>? = interfaceDbandeng?.editMitra(authToken, idMitra, xNamaLengkap, xAlamatMitra, xTglLahir, xJenisKel, xNoHpMitra )
         btnSaveEdit?.setOnClickListener {
+            val xNamaLengkap = editNamaLengkap?.text.toString()
+            val xAlamatMitra = editAlamatMitra?.text.toString()
+            val xTglLahir = editTglLahir?.text.toString()
+            val xJenisKel = editJenisKel?.text.toString()
+            val xNoHpMitra = editNoHpMitra?.text.toString()
+            Log.d("Nama Lengkap", xNamaLengkap)
+            val EditDataMitra: Call<EditProfilMitraRes>? = interfaceDbandeng?.editMitra(authToken, idMitra, xNamaLengkap, xAlamatMitra, xTglLahir, xJenisKel, xNoHpMitra )
             EditDataMitra?.enqueue(object : Callback<EditProfilMitraRes> {
                 override fun onResponse(call: Call<EditProfilMitraRes>, response: Response<EditProfilMitraRes>) {
                     if(response.isSuccessful) {
