@@ -5,7 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.ViewGroup
 import android.view.Window
@@ -13,6 +16,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
@@ -22,9 +27,16 @@ import com.example.dbandeng.response.LogoutMitraRes
 import com.example.dbandeng.response.ProfilMitraResponse
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Multipart
+import java.io.File
+
 
 class landing_page_profile : AppCompatActivity() {
 
@@ -101,14 +113,41 @@ class landing_page_profile : AppCompatActivity() {
             authToken = preferences.getString("auth_token", null).toString();
             logoutMitra("Bearer " + authToken)
         }
+
+        //setup edit foto on circleimageview click
+        val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                Log.d("PhotoPicker", "Selected URI: $uri")
+                updateFotoMitra(authToken,idMitra,uri)
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
+
+
+
+        foto_mitra.setOnClickListener {
+            Log.d("PhotoPicker", "otw selected")
+            try {
+
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }catch(error: Exception){
+                Log.d("PhotoPicker", error.message.toString())
+            }
+
+            val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        }
     }
 
     private fun getMitraDataProfile(authToken: String?, idMitra: String?){
         val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
-        val getDataMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.getMitra(authToken, idMitra )
+        val getDataMitra: Call<ProfilMitraResponse>? = interfaceDbandeng?.getMitra(authToken, idMitra)
         Log.d("cekToken", authToken + " -- " + idMitra);
         getDataMitra?.enqueue(object : Callback<ProfilMitraResponse> {
             override fun onResponse(call: Call<ProfilMitraResponse>, response: Response<ProfilMitraResponse>) {
+                Log.d("cekToken", response.code().toString() + " " + response.message())
                 if (response.isSuccessful) {
                     val res: ProfilMitraResponse? = response.body()
                     if (res != null) {
@@ -124,7 +163,7 @@ class landing_page_profile : AppCompatActivity() {
                     emailUser.setText(modulMitra?.email)
                     tglLahir.setText(modulMitra?.tglLahir)
 
-                    Toast.makeText(this@landing_page_profile, "Berhasil Login user", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this@landing_page_profile, "Berhasil Login user", Toast.LENGTH_LONG).show()
 
                 } else {
 
@@ -165,6 +204,7 @@ class landing_page_profile : AppCompatActivity() {
         editNoHpMitra?.setText(modulMitra?.getNo_hp())
         // Hasil Edit Profile
         btnSaveEdit?.setOnClickListener {
+            // Hasil Edit Profile harus di get string saat tekan tombol!
             val xNamaLengkap = editNamaLengkap?.text.toString()
             val xAlamatMitra = editAlamatMitra?.text.toString()
             val xTglLahir = editTglLahir?.text.toString()
@@ -174,11 +214,14 @@ class landing_page_profile : AppCompatActivity() {
             val EditDataMitra: Call<EditProfilMitraRes>? = interfaceDbandeng?.editMitra(authToken, idMitra, xNamaLengkap, xAlamatMitra, xTglLahir, xJenisKel, xNoHpMitra )
             EditDataMitra?.enqueue(object : Callback<EditProfilMitraRes> {
                 override fun onResponse(call: Call<EditProfilMitraRes>, response: Response<EditProfilMitraRes>) {
+                    Log.d("CekCall", call.request().toString())
                     if(response.isSuccessful) {
                         val res: EditProfilMitraRes? = response.body()
                         val rep = res?.getResponse()
                         val textToaster = rep
+                        editPopUp.dismiss()
                         Toast.makeText(this@landing_page_profile, "${textToaster}", Toast.LENGTH_LONG).show()
+                        getMitraDataProfile(authToken,idMitra)
                     } else {
                         Toast.makeText(this@landing_page_profile, "Profil Gagal Terupdate", Toast.LENGTH_LONG).show()
                     }
@@ -222,6 +265,43 @@ class landing_page_profile : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun uriToFile(uri: Uri): File? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = applicationContext.contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use { c ->
+            val columnIndex = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            c.moveToFirst()
+            val filePath = c.getString(columnIndex)
+            File(filePath)
+        }
+    }
+
+    private fun updateFotoMitra(authToken: String?, idMitra: String?, uri: Uri){
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val file:File? = uriToFile(uri);
+        val requestFile: RequestBody = file!!.asRequestBody("multipart/form-data".toMediaTypeOrNull());
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("foto_mitra", file.name, requestFile)
+        val editFoto: Call<ProfilMitraResponse>? = interfaceDbandeng?.editFotoMitra("Bearer "+authToken,idMitra,body);
+
+        editFoto?.enqueue(object : Callback<ProfilMitraResponse> {
+            override fun onResponse(call: Call<ProfilMitraResponse>, response: Response<ProfilMitraResponse>) {
+                Log.d("sendPhoto", "a" + call.request().toString())
+                Log.d("sendPhoto", response.code().toString() + " " + response.message())
+                if(response.isSuccessful) {
+                    Toast.makeText(this@landing_page_profile, "Berhasil Update Foto", Toast.LENGTH_LONG).show()
+                    getMitraDataProfile("Bearer " + authToken,idMitra)
+                }
+            }
+
+            override fun onFailure(call: Call<ProfilMitraResponse>, t: Throwable) {
+                Log.d("sendPhoto", t.message.toString())
+                Toast.makeText(this@landing_page_profile, "Gagal Update Foto", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
     }
 
 
