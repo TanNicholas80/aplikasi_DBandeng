@@ -8,13 +8,17 @@ import com.example.dbandeng.response.LoginRequest;
 import com.example.dbandeng.response.LogoutMitraRes;
 import com.example.dbandeng.response.ProfilMitraResponse;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface InterfaceDbandeng {
@@ -43,6 +47,7 @@ public interface InterfaceDbandeng {
                               @Field("alamatUser") String alamatUser);
 
     //Get Mitra Profile
+    @Headers("Accept: application/json")
     @GET("v1/mitra/read/{id}")
     Call<ProfilMitraResponse> getMitra(@Header("Authorization") String token, @Path("id") String id);
 
@@ -56,11 +61,12 @@ public interface InterfaceDbandeng {
                                        @Field("tglLahir") String tglLahir,
                                        @Field("jeniskel") String jkel,
                                        @Field("no_tlp") String no_hp);
-    @FormUrlEncoded
+    @Headers("Accept: application/json")
+    @Multipart
     @POST("v1/mitra/edit-foto/{id}")
     Call<ProfilMitraResponse> editFotoMitra(@Header("Authorization") String token,
                                             @Path("id") String id,
-                                            @Field("foto_mitra") String foto_mitra);
+                                            @Part MultipartBody.Part foto_mitra);
 
     @GET("v2/logout-mitra")
     Call<LogoutMitraRes> logoutMitra(@Header("Authorization") String token);
