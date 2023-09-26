@@ -85,6 +85,7 @@ class createproduct : AppCompatActivity() {
             if (uri != null) {
                 // Lanjutkan dengan menggunakan resultUri
                 // Panggil fungsi yang membutuhkan resultUri di sini
+                Toast.makeText(this@createproduct, "Menyimpan produk....", Toast.LENGTH_LONG).show()
                 createProdukMitra("Bearer " + authToken, idMitra, uri!!)
             } else {
                 Toast.makeText(this, "Pilih foto terlebih dahulu", Toast.LENGTH_SHORT).show()

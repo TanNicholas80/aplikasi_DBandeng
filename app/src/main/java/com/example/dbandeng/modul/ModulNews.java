@@ -1,52 +1,62 @@
 package com.example.dbandeng.modul;
 
 public class ModulNews {
-    String id_article, judul_article, isi_article, foto_news, tanggal_buat;
-    public ModulNews(String id_article, String judul_article, String isi_article, String foto_news, String tanggal_buat) {
-        this.id_article = id_article;
-        this.judul_article = judul_article;
-        this.isi_article = isi_article;
-        this.foto_news = foto_news;
-        this.tanggal_buat = tanggal_buat;
+    String id,jdlArticle,isiArticle,foto_article,created_at,updated_at;
+
+    public ModulNews(String id, String jdlArticle, String isiArticle, String foto_article, String created_at, String updated_at) {
+        this.id = id;
+        this.jdlArticle = jdlArticle;
+        this.isiArticle = isiArticle;
+        this.foto_article = foto_article;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
     }
 
-    public String getId_article() {
-        return id_article;
+    public String getId() {
+        return id;
     }
 
-    public void setId_article(String id_article) {
-        this.id_article = id_article;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getJudul_article() {
-        return judul_article;
+    public String getJdlArticle() {
+        return jdlArticle;
     }
 
-    public void setJudul_article(String judul_article) {
-        this.judul_article = judul_article;
+    public void setJdlArticle(String jdlArticle) {
+        this.jdlArticle = jdlArticle;
     }
 
-    public String getIsi_article() {
-        return isi_article;
+    public String getIsiArticle() {
+        return isiArticle;
     }
 
-    public void setIsi_article(String isi_article) {
-        this.isi_article = isi_article;
+    public void setIsiArticle(String isiArticle) {
+        this.isiArticle = isiArticle;
     }
 
-    public String getFoto_news() {
-        return foto_news;
+    public String getFoto_article() {
+        return foto_article;
     }
 
-    public void setFoto_news(String foto_news) {
-        this.foto_news = foto_news;
+    public void setFoto_article(String foto_article) {
+        this.foto_article = foto_article;
     }
 
-    public String getTanggal_buat_article() {
-        return tanggal_buat;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setTanggal_buat_article(String tanggal_buat) {
-        this.tanggal_buat = tanggal_buat;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

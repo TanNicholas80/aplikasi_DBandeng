@@ -39,6 +39,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
             val login: Call<ModulMitra>? = interfaceDbandeng?.loginMitra(xEmail, xPass)
             login?.enqueue(object : Callback<ModulMitra> {
                 override fun onResponse(call: Call<ModulMitra>, response: Response<ModulMitra>) {
+                    Log.d("loginAdmin", response.code().toString());
                     if (response.isSuccessful) {
                         val modulMitra: ModulMitra? = response.body()
                         val AuthToken = modulMitra?.getToken()
@@ -59,7 +60,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                         print(textToaster)
                         print(AuthToken)
                         Toast.makeText(this@login_admin, "${textToaster}", Toast.LENGTH_LONG).show()
-                        val loginAdmin_layout = Intent(this@login_admin, createproduct::class.java);// ntar ganti beranda lagi
+                        val loginAdmin_layout = Intent(this@login_admin, landing_page_news::class.java);// ntar ganti beranda lagi
 
                         startActivity(loginAdmin_layout);
                     } else {

@@ -75,10 +75,10 @@ class lading_page_home : AppCompatActivity() {
         val adaptorProduk = Adaptor_Product(ProdukArrayList)
         recyclerView?.setAdapter(adaptorProduk)
         // setup recyclerview News
-        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
-        for (i in 0..14) {
-            NewsArrayList.add(modulNewsDump)
-        }
+//        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
+//        for (i in 0..14) {
+//            NewsArrayList.add(modulNewsDump)
+//        }
         recyclerView = findViewById(R.id.recycler_berita_terbaru)
         val layoutManagerNews = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = layoutManagerNews
