@@ -2,6 +2,7 @@ package com.example.dbandeng
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,7 +17,13 @@ import com.denzcoskun.imageslider.constants.AnimationTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.landing_AdaptorNews
+import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.modul.ModulNews
+import com.example.dbandeng.response.GetArticleResponse
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 class landing_page_news : AppCompatActivity() {
@@ -27,6 +34,14 @@ class landing_page_news : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_news)
+        // setup Recyler View
+        recyclerView = findViewById(R.id.news_recycle)
+        recyclerView?.setLayoutManager(LinearLayoutManager(this))
+        try {
+            getNewsLanding()
+        } catch (e: Exception) {
+            Log.d("crud_produk", e.message!!)
+        }
         // setup toolbar
         NewsToolbar = findViewById(R.id.news_toolbar)
         setSupportActionBar(NewsToolbar)
@@ -63,14 +78,14 @@ class landing_page_news : AppCompatActivity() {
             }
         }
         // Setup Recyclerview
-        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
-        for (i in 0..14) {
-            NewsArrayList.add(modulNewsDump)
-        }
-        recyclerView = findViewById(R.id.news_recycle)
-        recyclerView?.setLayoutManager(LinearLayoutManager(this))
-        val adaptorNews = landing_AdaptorNews(NewsArrayList)
-        recyclerView?.setAdapter(adaptorNews)
+//        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
+//        for (i in 0..14) {
+//            NewsArrayList.add(modulNewsDump)
+//        }
+//        recyclerView = findViewById(R.id.news_recycle)
+//        recyclerView?.setLayoutManager(LinearLayoutManager(this))
+//        val adaptorNews = landing_AdaptorNews(NewsArrayList)
+//        recyclerView?.setAdapter(adaptorNews)
         // setup carousel
         val imageList = ArrayList<SlideModel>() // Create image list
 
@@ -117,5 +132,25 @@ class landing_page_news : AppCompatActivity() {
 
         })
         return true
+    }
+    // Get Article Berita
+    fun getNewsLanding() {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val getNews = interfaceDbandeng.GetArticle()
+        getNews.enqueue(object : Callback<GetArticleResponse> {
+            override fun onResponse(call: Call<GetArticleResponse>, response: Response<GetArticleResponse>) {
+                val responseData = response.body()!!.data
+                val gson = Gson()
+                val modelNews = gson.fromJson(responseData, ModulMitra::class.java)
+                val Landingnews = ArrayList(modelNews.news)
+                val adaptorNews = landing_AdaptorNews(Landingnews)
+                recyclerView!!.setAdapter(adaptorNews)
+            }
+
+            override fun onFailure(call: Call<GetArticleResponse>, t: Throwable) {
+                Toast.makeText(this@landing_page_news, "gagal get News" + t.message, Toast.LENGTH_LONG)
+                Log.d("crud_produk", "error" + t.message)
+            }
+        })
     }
 }

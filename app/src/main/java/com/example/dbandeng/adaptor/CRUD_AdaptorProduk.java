@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dbandeng.R;
 import com.example.dbandeng.modul.ModulProduk;
 import com.example.dbandeng.modul.ModulProdukNew;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
         holder.keterangan_produk.setText("Ukuran : " + produkArrayList.get(position).getBeratProduk());
         holder.stok_produk.setText("Stok : "+produkArrayList.get(position).getStok());
         holder.harga_produk.setText("Rp." + produkArrayList.get(position).getHrgProduk());
-        holder.foto_produk.setImageResource(R.drawable.ikan_kecil);
-
+        Picasso.get().load(produkArrayList.get(position).getFoto_produk()).resize(300, 300).into(holder.foto_produk);
     }
 
     @Override
