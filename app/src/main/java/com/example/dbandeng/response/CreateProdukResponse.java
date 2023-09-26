@@ -5,15 +5,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class CreateProdukResponse {
     @SerializedName("data")
-    ModulProdukNew modulProdukNew;
+    String modulProdukNew;
     @SerializedName("response")
-    private String response;
+    String response;
 
-    public ModulProdukNew getModulProdukNew() {
+    public CreateProdukResponse(String modulProdukNew, String response) {
+        this.modulProdukNew = modulProdukNew;
+        this.response = response;
+    }
+
+    public String getModulProdukNew() {
         return modulProdukNew;
     }
 
-    public void setModulProdukNew(ModulProdukNew modulProdukNew) {
+    public void setModulProdukNew(String modulProdukNew) {
         this.modulProdukNew = modulProdukNew;
     }
 
@@ -23,9 +28,5 @@ public class CreateProdukResponse {
 
     public void setResponse(String response) {
         this.response = response;
-    }
-
-    public CreateProdukResponse(ModulProdukNew modulProdukNew) {
-        this.modulProdukNew = modulProdukNew;
     }
 }

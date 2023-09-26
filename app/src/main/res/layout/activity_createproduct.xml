@@ -42,7 +42,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Bang Chad"
             />
             <Space
                 android:layout_width="match_parent"
@@ -63,7 +62,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Jl. Situ Aja no 16"
             />
             <Space
                 android:layout_width="match_parent"
@@ -84,7 +82,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="16-10-2003"
             />
             <Space
                 android:layout_width="match_parent"
@@ -105,7 +102,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Laki-Laki"
             />
             <Space
                 android:layout_width="match_parent"
@@ -126,7 +122,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="082134081040"
             />
             <Space
                 android:layout_width="match_parent"
@@ -147,7 +142,6 @@
                 android:paddingLeft="15dp"
                 android:paddingVertical="8dp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="082134081040"
             />
             <Space
                 android:layout_width="match_parent"
