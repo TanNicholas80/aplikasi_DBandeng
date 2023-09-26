@@ -70,16 +70,16 @@ public interface InterfaceDbandeng {
 
     @GET("product/read-mitra/{id}")
     Call<GetProductResponse> getProdukMitra(@Header("Authorization") String token, @Path("id") String id);
+    @Headers("Accept: application/json")
     @Multipart
-    @FormUrlEncoded
-    @POST("product/mitraId")
+    @POST("product/{id}")
     Call<CreateProdukResponse> createProdukMitra(@Header("Authorization") String token,
                                                  @Path("id") String id,
-                                                 @Field("nmProduk") String nmProduk,
-                                                 @Part("foto_produk") MultipartBody.Part foto_produk,
-                                                 @Field("hrgProduk") String hrgProduk,
-                                                 @Field("stok") String stok,
-                                                 @Field("beratProduk") String beratProduk,
-                                                 @Field("dskProduk") String dskProduk,
-                                                 @Field("link") String link);
+                                                 @Part("nmProduk") String nmProduk,
+                                                 @Part MultipartBody.Part foto_produk,
+                                                 @Part("hrgProduk") String hrgProduk,
+                                                 @Part("stok") String stok,
+                                                 @Part("beratProduk") String beratProduk,
+                                                 @Part("dskProduk") String dskProduk,
+                                                 @Part("link") String link);
 }

@@ -59,7 +59,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                         print(textToaster)
                         print(AuthToken)
                         Toast.makeText(this@login_admin, "${textToaster}", Toast.LENGTH_LONG).show()
-                        val loginAdmin_layout = Intent(this@login_admin, landing_page_profile::class.java);// ntar ganti beranda lagi
+                        val loginAdmin_layout = Intent(this@login_admin, Beranda::class.java);// ntar ganti beranda lagi
 
                         startActivity(loginAdmin_layout);
                     } else {

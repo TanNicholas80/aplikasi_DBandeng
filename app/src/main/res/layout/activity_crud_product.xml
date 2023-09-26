@@ -10,49 +10,9 @@
         android:id="@+id/CRUD_toolbar"
         layout="@layout/toolbar"
     />
-    <RelativeLayout
-        android:id="@+id/crud_actionbar"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        >
-        <ImageButton
-            android:id="@+id/icon_back"
-            android:layout_width="55dp"
-            android:layout_height="48dp"
-            android:src="@drawable/icon_arrow"
-            android:layout_centerVertical="true"
-            android:backgroundTint="@color/white"
-            android:scaleType="fitXY"
-            />
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_toRightOf="@+id/icon_back"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ubah Produk"
-            android:textSize="20dp"
-            android:fontFamily="@font/poppins_semibold"
-            />
-        <ImageButton
-            android:padding="0dp"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/icon_search"
-            android:layout_alignParentRight="true"
-            android:backgroundTint="@color/white"
-            android:scaleType="fitXY"
-            />
-    </RelativeLayout>
     <LinearLayout
         android:id="@+id/crud_content"
-        android:layout_below="@+id/crud_actionbar"
-        android:layout_above="@+id/crud_btnTambah"
+        android:layout_below="@+id/CRUD_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
