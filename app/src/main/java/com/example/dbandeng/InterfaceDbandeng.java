@@ -83,4 +83,8 @@ public interface InterfaceDbandeng {
                                                  @Part("beratProduk") RequestBody beratProduk,
                                                  @Part("dskProduk") RequestBody dskProduk,
                                                  @Part("link") RequestBody link);
+
+    @Headers("Accept: application/json")
+    @GET("article/read-all")
+    Call<GetArticleResponse> GetArticle();
 }

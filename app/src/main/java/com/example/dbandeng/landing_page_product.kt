@@ -2,6 +2,7 @@ package com.example.dbandeng
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -9,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.Adaptor_Product
@@ -24,7 +25,14 @@ class landing_page_product : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page_product)
-
+        // Setup Recycler view Product
+        recyclerView = findViewById(R.id.product_recycle)
+        recyclerView?.setLayoutManager(LinearLayoutManager(this))
+        try {
+            getProdukLanding()
+        } catch (e: Exception) {
+            Log.d("crud_produk", e.message!!)
+        }
         val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
         bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_not_active))
         bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.product_active))
@@ -53,14 +61,14 @@ class landing_page_product : AppCompatActivity() {
                 }
             }
         }
-        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal","", "18", "10.000")
-        for (i in 0..14) {
-            ProdukArrayList.add(modulProdukDump)
-        }
-        recyclerView = findViewById(R.id.product_recycle)
-        recyclerView?.setLayoutManager(GridLayoutManager(this, 2))
-        val adaptorProduk = Adaptor_Product(ProdukArrayList)
-        recyclerView?.setAdapter(adaptorProduk)
+//        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal","", "18", "10.000")
+//        for (i in 0..14) {
+//            ProdukArrayList.add(modulProdukDump)
+//        }
+//        recyclerView = findViewById(R.id.product_recycle)
+//        recyclerView?.setLayoutManager(GridLayoutManager(this, 2))
+//        val adaptorProduk = Adaptor_Product(ProdukArrayList)
+//        recyclerView?.setAdapter(adaptorProduk)
         // setup toolbar
         produkToolbar = findViewById(R.id.produk_toolbar)
         setSupportActionBar(produkToolbar)
@@ -101,5 +109,9 @@ class landing_page_product : AppCompatActivity() {
 
         })
         return true
+    }
+
+    fun getProdukLanding() {
+
     }
 }

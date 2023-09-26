@@ -25,10 +25,10 @@
                 <LinearLayout
                     android:layout_width="380dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="-5dp"
                     android:background="@drawable/news_recyclerview"
                     android:orientation="vertical"
                     android:paddingHorizontal="10dp"
-                    android:layout_marginLeft="-5dp"
                 >
                     <LinearLayout
                         android:layout_width="wrap_content"

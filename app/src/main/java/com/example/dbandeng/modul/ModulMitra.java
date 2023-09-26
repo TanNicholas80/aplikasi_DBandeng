@@ -41,12 +41,13 @@ public class ModulMitra {
     String tglLahir;
 
     List<ModulProdukNew> products;
+    List<ModulNews> news;
 
     public Token token;
     private String response;
 
 
-    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password, List<ModulProdukNew> products) {
+    public ModulMitra(String id_Mitra, String nama_lengkap, String nama_mitra, String foto_mitra, String jkel, String no_hp, String alamat, String email, String password, List<ModulProdukNew> products, List<ModulNews> news) {
         this.id_Mitra = id_Mitra;
         this.nama_lengkap = nama_lengkap;
         this.nama_mitra = nama_mitra;
@@ -57,6 +58,7 @@ public class ModulMitra {
         this.email = email;
         this.password = password;
         this.products = products;
+        this.news = news;
     }
 
     public List<ModulProdukNew> getProducts() {
@@ -65,6 +67,14 @@ public class ModulMitra {
 
     public void setProducts(List<ModulProdukNew> products) {
         this.products = products;
+    }
+
+    public List<ModulNews> getNews() {
+        return news;
+    }
+
+    public void setNews(List<ModulNews> news) {
+        this.news = news;
     }
 
     public String getId_Mitra() {
