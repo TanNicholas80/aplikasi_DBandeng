@@ -18,6 +18,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulNews
+import com.example.dbandeng.modul.ModulProdukNew
 import com.example.dbandeng.response.GetArticleResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -87,9 +88,9 @@ class landing_page_news : AppCompatActivity() {
         // setup carousel
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        imageList.add(SlideModel(R.drawable.news1))
-        imageList.add(SlideModel(R.drawable.news2))
-        imageList.add(SlideModel(R.drawable.news3))
+        imageList.add(SlideModel(R.drawable.news1_min))
+        imageList.add(SlideModel(R.drawable.news2_min))
+        imageList.add(SlideModel(R.drawable.news3_min))
 
         val imageSlider = findViewById<ImageSlider>(R.id.image_slider)
 
@@ -115,7 +116,7 @@ class landing_page_news : AppCompatActivity() {
 
                 if(newText != null) {
                     for (i in NewsArrayList) {
-                        if (i.judul_article.lowercase(Locale.ROOT).contains(newText)) {
+                        if (i.jdlArticle.lowercase(Locale.ROOT).contains(newText)) {
                             searchList.add(i)
                         }
                     }
@@ -137,9 +138,10 @@ class landing_page_news : AppCompatActivity() {
         val getNews = interfaceDbandeng.GetArticle()
         getNews.enqueue(object : Callback<GetArticleResponse> {
             override fun onResponse(call: Call<GetArticleResponse>, response: Response<GetArticleResponse>) {
-                val responseData = response.body()!!.data
-                val adaptorNews = landing_AdaptorNews(responseData)
-                recyclerView!!.setAdapter(adaptorNews)
+                val responseData: List<ModulNews> = response.body()!!.data
+                val produkMitra: ArrayList<ModulNews> = ArrayList<ModulNews>(responseData)
+                val newsAdaptor : landing_AdaptorNews = landing_AdaptorNews(produkMitra)
+                recyclerView!!.setAdapter(newsAdaptor)
             }
 
             override fun onFailure(call: Call<GetArticleResponse>, t: Throwable) {

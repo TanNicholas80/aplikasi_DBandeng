@@ -5,6 +5,7 @@ import com.example.dbandeng.modul.ModulUser;
 import com.example.dbandeng.response.*;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 import retrofit2.http.Body;
@@ -75,13 +76,13 @@ public interface InterfaceDbandeng {
     @POST("product/{id}")
     Call<CreateProdukResponse> createProdukMitra(@Header("Authorization") String token,
                                                  @Path("id") String id,
-                                                 @Part("nmProduk") String nmProduk,
+                                                 @Part("nmProduk") RequestBody nmProduk,
                                                  @Part MultipartBody.Part foto_produk,
-                                                 @Part("hrgProduk") String hrgProduk,
-                                                 @Part("stok") String stok,
-                                                 @Part("beratProduk") String beratProduk,
-                                                 @Part("dskProduk") String dskProduk,
-                                                 @Part("link") String link);
+                                                 @Part("hrgProduk") RequestBody hrgProduk,
+                                                 @Part("stok") RequestBody stok,
+                                                 @Part("beratProduk") RequestBody beratProduk,
+                                                 @Part("dskProduk") RequestBody dskProduk,
+                                                 @Part("link") RequestBody link);
 
     @Headers("Accept: application/json")
     @GET("article/read-all")

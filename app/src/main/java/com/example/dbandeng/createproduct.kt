@@ -13,10 +13,13 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dbandeng.response.CreateProdukResponse
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.create
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,8 +57,9 @@ class createproduct : AppCompatActivity() {
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { resultUri ->
             // Callback is invoked after the user selects a media item or closes the
             // photo picker
-            uri = resultUri
-            if (uri != null) {
+
+            if (resultUri != null) {
+                uri = resultUri
                 Log.d("PhotoPicker", "Selected URI: $uri")
             } else {
                 Log.d("PhotoPicker", "No media selected")
@@ -81,6 +85,7 @@ class createproduct : AppCompatActivity() {
             if (uri != null) {
                 // Lanjutkan dengan menggunakan resultUri
                 // Panggil fungsi yang membutuhkan resultUri di sini
+                Toast.makeText(this@createproduct, "Menyimpan produk....", Toast.LENGTH_LONG).show()
                 createProdukMitra("Bearer " + authToken, idMitra, uri!!)
             } else {
                 Toast.makeText(this, "Pilih foto terlebih dahulu", Toast.LENGTH_SHORT).show()
@@ -110,9 +115,20 @@ class createproduct : AppCompatActivity() {
         val xBeratProduk = inputBeratProduk.text.toString()
         val xDskProduk = inputDskProduk.text.toString()
         val xLinkProduk = inputLinkProduk.text.toString()
-        val createProduk: Call<CreateProdukResponse>? = interfaceDbandeng?.createProdukMitra("Bearer "+authToken,idMitra, xNamaProduk, body, xHrgProduk, xStokProduk, xBeratProduk, xDskProduk, xLinkProduk)
+
+        //merubah semua input request menajdi multipart
+        val requestName: RequestBody = xNamaProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestHrg: RequestBody = xHrgProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestStok: RequestBody = xStokProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestBerat: RequestBody = xBeratProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestDsk: RequestBody = xDskProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestLink: RequestBody = xLinkProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+
+        val createProduk: Call<CreateProdukResponse>? = interfaceDbandeng?.createProdukMitra(authToken,idMitra, requestName, body, requestHrg, requestStok, requestBerat, requestDsk, requestLink)
         createProduk?.enqueue(object : Callback<CreateProdukResponse> {
             override fun onResponse(call: Call<CreateProdukResponse>, response: Response<CreateProdukResponse>) {
+                Log.d("sendPhoto", "a" + call.request().toString())
+                Log.d("sendPhoto", response.code().toString() + " " + response.body().toString())
                 if(response.isSuccessful) {
                     Toast.makeText(this@createproduct, "Produk Berhasil Terbuat", Toast.LENGTH_LONG).show()
                     val CRUDProduct_layout = Intent(this@createproduct, CRUD_Product::class.java);// ntar ganti beranda lagi
@@ -122,6 +138,8 @@ class createproduct : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<CreateProdukResponse>, t: Throwable) {
+                Log.d("sendPhoto", "a" + t.message.toString())
+                Log.d("sendPhoto", "b " + call.request().toString())
                 Toast.makeText(this@createproduct, "Produk Gagal Terbuat", Toast.LENGTH_LONG).show()
             }
 
