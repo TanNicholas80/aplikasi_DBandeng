@@ -17,10 +17,8 @@ import com.denzcoskun.imageslider.constants.AnimationTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.landing_AdaptorNews
-import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.modul.ModulNews
 import com.example.dbandeng.response.GetArticleResponse
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -140,10 +138,7 @@ class landing_page_news : AppCompatActivity() {
         getNews.enqueue(object : Callback<GetArticleResponse> {
             override fun onResponse(call: Call<GetArticleResponse>, response: Response<GetArticleResponse>) {
                 val responseData = response.body()!!.data
-                val gson = Gson()
-                val modelNews = gson.fromJson(responseData, ModulMitra::class.java)
-                val Landingnews = ArrayList(modelNews.news)
-                val adaptorNews = landing_AdaptorNews(Landingnews)
+                val adaptorNews = landing_AdaptorNews(responseData)
                 recyclerView!!.setAdapter(adaptorNews)
             }
 

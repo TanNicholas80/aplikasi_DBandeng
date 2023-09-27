@@ -38,7 +38,7 @@ public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNew
     public void onBindViewHolder(@NonNull landing_AdaptorNews.myViewHolder holder, int position) {
         holder.judul_article.setText(NewsArrayList.get(position).getJudul_article());
         holder.tanggal_buat.setText(NewsArrayList.get(position).getTanggal_buat_article());
-        Picasso.get().load(NewsArrayList.get(position).getFoto_news()).resize(300, 300).into(holder.foto_article);
+//        Picasso.get().load(NewsArrayList.get(position).getFoto_news()).resize(300, 300).onlyScaleDown().fit().into(holder.foto_article);
     }
 
     @Override
