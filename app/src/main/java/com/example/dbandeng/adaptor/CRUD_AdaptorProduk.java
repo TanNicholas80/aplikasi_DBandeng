@@ -123,7 +123,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
 
     public void popUpDelete() {
         interfaceDbandeng= koneksiAPI.Koneksi().create(InterfaceDbandeng.class);
-        
+
 //        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
 //        val editPopUp = Dialog(context)
 //        editPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
