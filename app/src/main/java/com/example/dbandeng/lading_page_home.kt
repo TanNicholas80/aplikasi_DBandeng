@@ -65,10 +65,10 @@ class lading_page_home : AppCompatActivity() {
         imageSlider.setImageList(imageList)
         imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
         // setup recyclerview Product
-        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10","18000")
-        for (i in 0..14) {
-            ProdukArrayList.add(modulProdukDump)
-        }
+//        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10","18000")
+//        for (i in 0..14) {
+//            ProdukArrayList.add(modulProdukDump)
+//        }
         recyclerView = findViewById(R.id.recycler_produk_baru)
         val layoutManagerProduk = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView?.layoutManager = layoutManagerProduk

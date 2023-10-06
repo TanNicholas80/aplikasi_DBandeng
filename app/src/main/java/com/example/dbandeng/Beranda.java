@@ -32,8 +32,8 @@ public class Beranda extends AppCompatActivity implements View.OnClickListener {
             startActivity(new Intent(Beranda.this, kelola_iot.class));
         } else if (v.getId()==R.id.btnHasilIot) {
             startActivity(new Intent(Beranda.this, hasil_iot.class));
-        } else {
-            startActivity(new Intent(Beranda.this, landing_page_profile.class));
+        } else if (v.getId()==R.id.btnProfil) {
+            startActivity(new Intent(Beranda.this, landing_page_profile_admin.class));
         }
     }
 }

@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -40,6 +41,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerView;
     ModulProduk modulProdukDump;
     Button tblCreateProduk;
+//    ImageButton tblEditProduk, tblDeleteProduk;
     ArrayList<ModulProdukNew> produkArrayList=new ArrayList<>();
     private Toolbar CRUDToolbar;
     @Override
@@ -48,9 +50,13 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_crud_product);
 
         tblCreateProduk = findViewById(R.id.crud_btnTambah);
+//        tblEditProduk = findViewById(R.id.crud_btnEdit);
+//        tblDeleteProduk = findViewById(R.id.crud_btnHapus);
         tblCreateProduk.setOnClickListener(this);
+//        tblEditProduk.setOnClickListener(this);
+//        tblDeleteProduk.setOnClickListener(this);
         // setup Data RecyclerView
-        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
+//        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
 //        for (int i = 0; i < 15; i++){
 //            produkArrayList.add(modulProdukDump);
 //        }
@@ -144,5 +150,11 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         if(v.getId()==R.id.crud_btnTambah) {
             startActivity(new Intent(CRUD_Product.this,createproduct.class));
         }
+//        else if(v.getId()==R.id.crud_btnEdit) {
+//            startActivity(new Intent(CRUD_Product.this,createproduct.class));
+//        }
+//        else if (v.getId()==R.id.crud_btnHapus) {
+//
+//        }
     }
 }

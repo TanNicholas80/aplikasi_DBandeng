@@ -18,7 +18,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulNews
-import com.example.dbandeng.modul.ModulProdukNew
 import com.example.dbandeng.response.GetArticleResponse
 import retrofit2.Call
 import retrofit2.Callback

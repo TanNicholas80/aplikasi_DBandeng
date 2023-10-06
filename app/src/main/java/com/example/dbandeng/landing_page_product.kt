@@ -10,11 +10,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.adaptor.Adaptor_Product
 import com.example.dbandeng.modul.ModulProduk
+import com.example.dbandeng.response.GetProductLandingRes
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 class landing_page_product : AppCompatActivity() {
@@ -27,7 +31,7 @@ class landing_page_product : AppCompatActivity() {
         setContentView(R.layout.activity_landing_page_product)
         // Setup Recycler view Product
         recyclerView = findViewById(R.id.product_recycle)
-        recyclerView?.setLayoutManager(LinearLayoutManager(this))
+        recyclerView?.setLayoutManager(GridLayoutManager(this, 2))
         try {
             getProdukLanding()
         } catch (e: Exception) {
@@ -112,6 +116,20 @@ class landing_page_product : AppCompatActivity() {
     }
 
     fun getProdukLanding() {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val getProduk = interfaceDbandeng.GetAllProduk()
+        getProduk.enqueue(object : Callback<GetProductLandingRes> {
+            override fun onResponse(call: Call<GetProductLandingRes>, response: Response<GetProductLandingRes>) {
+                val responseData: List<ModulProduk> = response.body()!!.data
+                val produkLanding: ArrayList<ModulProduk> = ArrayList<ModulProduk>(responseData)
+                val produkAdaptor : Adaptor_Product = Adaptor_Product(produkLanding)
+                recyclerView!!.setAdapter(produkAdaptor)
+            }
 
+            override fun onFailure(call: Call<GetProductLandingRes>, t: Throwable) {
+                Toast.makeText(this@landing_page_product, "gagal get produk" + t.message, Toast.LENGTH_LONG)
+                Log.d("crud_produk", "error" + t.message)
+            }
+        })
     }
 }
