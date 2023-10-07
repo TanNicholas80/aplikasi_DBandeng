@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dbandeng.CRUD_Product;
 import com.example.dbandeng.InterfaceDbandeng;
 import com.example.dbandeng.R;
 import com.example.dbandeng.edit_produk;
@@ -90,7 +91,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                Intent intent = new Intent(holder.itemView.getContext(), .class);
+                Intent intent = new Intent(holder.itemView.getContext(), CRUD_Product.class);
                 intent.putExtra("id_produk", produkArrayList.get(position).getId());
                 holder.itemView.getContext().startActivity(intent);
             }

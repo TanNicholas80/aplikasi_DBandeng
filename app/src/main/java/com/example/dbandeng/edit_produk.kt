@@ -104,7 +104,7 @@ class edit_produk : AppCompatActivity() {
                 // Panggil fungsi yang membutuhkan resultUri di sini
                 updateProdukMitra("Bearer " + authToken, productId, uri!!)
             } else {
-                Toast.makeText(this@edit_produk, "Foto Masih kosong", Toast.LENGTH_LONG).show()
+                updateProdukMitraWithoutFoto("Bearer " + authToken, productId,)
             }
         }
 
@@ -124,47 +124,82 @@ class edit_produk : AppCompatActivity() {
             File(filePath)
         }
     }
+
+    fun updateProdukMitraWithoutFoto(authToken: String?, idMitra: String?,){
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val xEditNamaProduk = editNamaProduk?.text.toString()
+        val xEditHrgProduk = editHrgProduk?.text.toString()
+        val xEditStokProduk = editStokProduk?.text.toString()
+        val xEditBeratProduk = editBeratProduk?.text.toString()
+        val xEditDskProduk = editDskProduk?.text.toString()
+        val xEditLinkProduk = editLinkProduk?.text.toString()
+
+        //merubah semua input request menajdi multipart
+        val requestName: RequestBody = xEditNamaProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestHrg: RequestBody = xEditHrgProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestStok: RequestBody = xEditStokProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestBerat: RequestBody = xEditBeratProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestDsk: RequestBody = xEditDskProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestLink: RequestBody = xEditLinkProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+
+        val editProduk: Call<updateProdukResponse>? = interfaceDbandeng?.updateProdukMitraWithoutPhoto(authToken,idMitra, requestName, requestHrg, requestStok, requestBerat, requestDsk, requestLink)
+        editProduk?.enqueue(object : Callback<updateProdukResponse> {
+            override fun onResponse(call: Call<updateProdukResponse>, response: Response<updateProdukResponse>) {
+                if(response.isSuccessful) {
+                    Toast.makeText(this@edit_produk, "Produk Berhasil Diperbarui", Toast.LENGTH_LONG).show()
+                    val CRUDProduct_layout = Intent(this@edit_produk, CRUD_Product::class.java);// ntar ganti beranda lagi
+
+                    startActivity(CRUDProduct_layout);
+                }
+            }
+
+            override fun onFailure(call: Call<updateProdukResponse>, t: Throwable) {
+                Log.d("sendPhoto", "a" + t.message.toString())
+                Log.d("sendPhoto", "b " + call.request().toString())
+                Toast.makeText(this@edit_produk, "Produk Gagal Diperbarui", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
     fun updateProdukMitra(authToken: String?, idMitra: String?, uri: Uri) {
         val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
-        btnSimpanEdit.setOnClickListener{
-            val xEditNamaProduk = editNamaProduk?.text.toString()
-            val file: File? = uriToFile(uri);
-            val requestFile: RequestBody = file!!.asRequestBody("multipart/form-data".toMediaTypeOrNull());
-            val body: MultipartBody.Part = MultipartBody.Part.createFormData("foto_produk", file.name, requestFile)
-            val xEditHrgProduk = editHrgProduk?.text.toString()
-            val xEditStokProduk = editStokProduk?.text.toString()
-            val xEditBeratProduk = editBeratProduk?.text.toString()
-            val xEditDskProduk = editDskProduk?.text.toString()
-            val xEditLinkProduk = editLinkProduk?.text.toString()
+        val xEditNamaProduk = editNamaProduk?.text.toString()
+        val file: File? = uriToFile(uri);
+        val requestFile: RequestBody = file!!.asRequestBody("multipart/form-data".toMediaTypeOrNull());
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("foto_produk", file.name, requestFile)
+        val xEditHrgProduk = editHrgProduk?.text.toString()
+        val xEditStokProduk = editStokProduk?.text.toString()
+        val xEditBeratProduk = editBeratProduk?.text.toString()
+        val xEditDskProduk = editDskProduk?.text.toString()
+        val xEditLinkProduk = editLinkProduk?.text.toString()
 
-            //merubah semua input request menajdi multipart
-            val requestName: RequestBody = xEditNamaProduk.toRequestBody("text/plain".toMediaTypeOrNull());
-            val requestHrg: RequestBody = xEditHrgProduk.toRequestBody("text/plain".toMediaTypeOrNull());
-            val requestStok: RequestBody = xEditStokProduk.toRequestBody("text/plain".toMediaTypeOrNull());
-            val requestBerat: RequestBody = xEditBeratProduk.toRequestBody("text/plain".toMediaTypeOrNull());
-            val requestDsk: RequestBody = xEditDskProduk.toRequestBody("text/plain".toMediaTypeOrNull());
-            val requestLink: RequestBody = xEditLinkProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        //merubah semua input request menajdi multipart
+        val requestName: RequestBody = xEditNamaProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestHrg: RequestBody = xEditHrgProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestStok: RequestBody = xEditStokProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestBerat: RequestBody = xEditBeratProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestDsk: RequestBody = xEditDskProduk.toRequestBody("text/plain".toMediaTypeOrNull());
+        val requestLink: RequestBody = xEditLinkProduk.toRequestBody("text/plain".toMediaTypeOrNull());
 
-            val editProduk: Call<updateProdukResponse>? = interfaceDbandeng?.updateProdukMitra(authToken,idMitra, requestName, body, requestHrg, requestStok, requestBerat, requestDsk, requestLink)
-            editProduk?.enqueue(object : Callback<updateProdukResponse> {
-                override fun onResponse(call: Call<updateProdukResponse>, response: Response<updateProdukResponse>) {
-                    Log.d("sendPhoto", "a" + call.request().toString())
-                    Log.d("sendPhoto", response.code().toString() + " " + response.body().toString())
-                    if(response.isSuccessful) {
-                        Toast.makeText(this@edit_produk, "Produk Berhasil Diperbarui", Toast.LENGTH_LONG).show()
-                        val CRUDProduct_layout = Intent(this@edit_produk, CRUD_Product::class.java);// ntar ganti beranda lagi
+        val editProduk: Call<updateProdukResponse>? = interfaceDbandeng?.updateProdukMitra(authToken,idMitra, requestName, body, requestHrg, requestStok, requestBerat, requestDsk, requestLink)
+        editProduk?.enqueue(object : Callback<updateProdukResponse> {
+            override fun onResponse(call: Call<updateProdukResponse>, response: Response<updateProdukResponse>) {
+                Log.d("sendPhoto", "a" + call.request().toString())
+                Log.d("sendPhoto", response.code().toString() + " " + response.body().toString())
+                if(response.isSuccessful) {
+                    Toast.makeText(this@edit_produk, "Produk Berhasil Diperbarui", Toast.LENGTH_LONG).show()
+                    val CRUDProduct_layout = Intent(this@edit_produk, CRUD_Product::class.java);// ntar ganti beranda lagi
 
-                        startActivity(CRUDProduct_layout);
-                    }
+                    startActivity(CRUDProduct_layout);
                 }
+            }
 
-                override fun onFailure(call: Call<updateProdukResponse>, t: Throwable) {
-                    Log.d("sendPhoto", "a" + t.message.toString())
-                    Log.d("sendPhoto", "b " + call.request().toString())
-                    Toast.makeText(this@edit_produk, "Produk Gagal Diperbarui", Toast.LENGTH_LONG).show()
-                }
+            override fun onFailure(call: Call<updateProdukResponse>, t: Throwable) {
+                Log.d("sendPhoto", "a" + t.message.toString())
+                Log.d("sendPhoto", "b " + call.request().toString())
+                Toast.makeText(this@edit_produk, "Produk Gagal Diperbarui", Toast.LENGTH_LONG).show()
+            }
 
-            })
-        }
+        })
     }
 }

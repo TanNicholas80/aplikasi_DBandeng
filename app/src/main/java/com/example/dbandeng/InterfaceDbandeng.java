@@ -95,6 +95,18 @@ public interface InterfaceDbandeng {
                              @Part("beratProduk") RequestBody beratProduk,
                              @Part("dskProduk") RequestBody dskProduk,
                              @Part("link") RequestBody link);
+
+    @Headers("Accept: application/json")
+    @Multipart
+    @POST("product/edit/{id}")
+    Call<updateProdukResponse> updateProdukMitraWithoutPhoto(@Header("Authorization") String token,
+                                                 @Path("id") String id,
+                                                 @Part("nmProduk") RequestBody nmProduk,
+                                                 @Part("hrgProduk") RequestBody hrgProduk,
+                                                 @Part("stok") RequestBody stok,
+                                                 @Part("beratProduk") RequestBody beratProduk,
+                                                 @Part("dskProduk") RequestBody dskProduk,
+                                                 @Part("link") RequestBody link);
     @Headers("Accept: application/json")
     @DELETE("product/delete/{id}")
     Call<deleteProdukRes> deleteProduk(@Header("Authorization") String token,
