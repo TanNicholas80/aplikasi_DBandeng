@@ -19,7 +19,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.response.EditProfilMitraRes
 import com.example.dbandeng.response.LogoutMitraRes
@@ -74,30 +73,6 @@ class landing_page_profile_admin : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Beranda"
-        // Setup Meow Button
-        val bottomNavigation = findViewById(R.id.bottomNavigation) as MeowBottomNavigation
-        bottomNavigation.add(MeowBottomNavigation.Model(1, R.drawable.home_not_active))
-        bottomNavigation.add(MeowBottomNavigation.Model(2, R.drawable.product_icon))
-        bottomNavigation.add(MeowBottomNavigation.Model(3, R.drawable.news_user))
-        bottomNavigation.add(MeowBottomNavigation.Model(4, R.drawable.profile_active))
-        bottomNavigation.setOnClickMenuListener {
-            when (it.id) {
-                1 -> {
-                    val landing_page_layout = Intent(this@landing_page_profile_admin, lading_page_home::class.java);
-                    startActivity(landing_page_layout)
-                }
-
-                2 -> {
-                    val product_page_layout = Intent(this@landing_page_profile_admin, landing_page_product::class.java);
-                    startActivity(product_page_layout)
-                }
-
-                3 -> {
-                    val news_page_layout = Intent(this@landing_page_profile_admin, landing_page_news::class.java);
-                    startActivity(news_page_layout)
-                }
-            }
-        }
         // setup pop up edit
         val btnEditUser : Button = findViewById(R.id.Edit_User)
         btnEditUser.setOnClickListener {
@@ -109,7 +84,7 @@ class landing_page_profile_admin : AppCompatActivity() {
         val btnLogoutUser : Button = findViewById(R.id.Logout_User)
         btnLogoutUser.setOnClickListener {
             authToken = preferences.getString("auth_token", null).toString();
-            logoutMitra("Bearer " + authToken)
+            logoutMitra(this,"Bearer " + authToken)
         }
 
         //setup edit foto on circleimageview click
@@ -239,30 +214,46 @@ class landing_page_profile_admin : AppCompatActivity() {
         editPopUp.show()
     }
 
-    private fun logoutMitra(authToken: String?) {
+    private fun logoutMitra(context: Context, authToken: String?) {
         val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
-        val LogoutMitra: Call<LogoutMitraRes>? = interfaceDbandeng?.logoutMitra(authToken)
+        val logoutPopUp = Dialog(context)
+        logoutPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        logoutPopUp.setCancelable(false)
+        logoutPopUp.setContentView(R.layout.layout_popup_logout)
+        logoutPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        logoutPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnYa : Button? = logoutPopUp.findViewById(R.id.btnYalogout)
+        val btnTidak : Button? = logoutPopUp.findViewById(R.id.btnTidaklogout)
+        btnYa?.setOnClickListener {
+            val LogoutMitra: Call<LogoutMitraRes>? = interfaceDbandeng?.logoutMitra(authToken)
 
-        LogoutMitra?.enqueue(object : Callback<LogoutMitraRes> {
-            override fun onResponse(call: Call<LogoutMitraRes>, response: Response<LogoutMitraRes>) {
-                if(response.isSuccessful) {
-                    val res : LogoutMitraRes? = response.body()
-                    val rep = res?.getResponse()
-                    val textToaster = rep
-                    Toast.makeText(this@landing_page_profile_admin, "${textToaster}", Toast.LENGTH_LONG).show()
-                    val loginAdmin_layout = Intent(this@landing_page_profile_admin, login_admin::class.java);// ntar ganti beranda lagi
+            LogoutMitra?.enqueue(object : Callback<LogoutMitraRes> {
+                override fun onResponse(call: Call<LogoutMitraRes>, response: Response<LogoutMitraRes>) {
+                    if(response.isSuccessful) {
+                        val res : LogoutMitraRes? = response.body()
+                        val rep = res?.getResponse()
+                        val textToaster = rep
+                        Toast.makeText(this@landing_page_profile_admin, "${textToaster}", Toast.LENGTH_LONG).show()
+                        val loginAdmin_layout = Intent(this@landing_page_profile_admin, login_admin::class.java);// ntar ganti beranda lagi
 
-                    startActivity(loginAdmin_layout);
-                } else {
-                    Toast.makeText(this@landing_page_profile_admin, "Logout Gagal", Toast.LENGTH_LONG).show()
+                        startActivity(loginAdmin_layout);
+                    } else {
+                        Toast.makeText(this@landing_page_profile_admin, "Logout Gagal", Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<LogoutMitraRes>, t: Throwable) {
-                Toast.makeText(this@landing_page_profile_admin, "Logout Mitra Gagal", Toast.LENGTH_LONG).show()
-            }
+                override fun onFailure(call: Call<LogoutMitraRes>, t: Throwable) {
+                    Toast.makeText(this@landing_page_profile_admin, "Logout Mitra Gagal", Toast.LENGTH_LONG).show()
+                }
 
-        })
+            })
+        }
+
+        btnTidak?.setOnClickListener {
+            logoutPopUp.dismiss()
+        }
+
+        logoutPopUp.show()
     }
 
     private fun uriToFile(uri: Uri): File? {

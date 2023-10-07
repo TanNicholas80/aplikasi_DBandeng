@@ -1,10 +1,29 @@
 package com.example.dbandeng.modul;
 
-public class ModulUser {
-    String id_User, name, alamatUser, no_user, foto_user, email, password;
+class Token_User {
+    public String token;
 
-    public ModulUser(String id_User, String name, String alamatUser, String no_user, String foto_user, String email, String password) {
-        this.id_User = id_User;
+    public Token_User(String token){
+        this.token = token;
+    }
+
+    public String getToken(){
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+}
+
+public class ModulUser {
+    String id, name, alamatUser, no_user, foto_user, email, password;
+
+    public Token_User token;
+    private String response;
+
+    public ModulUser(String id, String name, String alamatUser, String no_user, String foto_user, String email, String password) {
+        this.id = id;
         this.name = name;
         this.alamatUser = alamatUser;
         this.no_user = no_user;
@@ -14,11 +33,11 @@ public class ModulUser {
     }
 
     public String getId_User() {
-        return id_User;
+        return id;
     }
 
-    public void setId_User(String id_User) {
-        this.id_User = id_User;
+    public void setId_User(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -67,5 +86,17 @@ public class ModulUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() { return token.getToken(); }
+
+    public void setToken(Token_User token) {
+        this.token = token;
+    }
+
+    public String getResponse() { return response; }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

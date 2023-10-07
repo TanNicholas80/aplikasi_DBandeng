@@ -36,10 +36,17 @@ public interface InterfaceDbandeng {
     @POST("login/user")
     Call<ModulUser> loginUser (@Field("email") String email,
                                @Field("password") String password);
+    // Get User Profile
+    @Headers("Accept: application/json")
+    @GET("get/user/{id}")
+    Call<ProfilUserResponse> getUser(@Header("Authorization") String token, @Path("id") String id);
+
     // Edit Profile User
     @FormUrlEncoded
     @POST("edit/user/{id}")
-    Call<ModulUser> editUser (@Field("name") String name,
+    Call<ModulUser> editUser (@Header("Authorization") String token,
+                              @Path("id") String id,
+                              @Field("name") String name,
                               @Field("email") String email,
                               @Field("no_user") String no_user,
                               @Field("alamatUser") String alamatUser);

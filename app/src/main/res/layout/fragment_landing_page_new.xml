@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".landing_page_news">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+             tools:context=".landing_page_new">
     <include
         android:id="@+id/news_toolbar"
         layout="@layout/toolbar"
     />
     <LinearLayout
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="65dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_above="@+id/bottomNavigation"
     >
         <TextView
             android:layout_width="wrap_content"
@@ -57,16 +54,4 @@
             android:orientation="vertical"
         />
     </LinearLayout>
-    <com.etebarian.meowbottomnavigation.MeowBottomNavigation
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:mbn_circleColor="#00C2FF"
-        app:mbn_backgroundBottomColor="#ffffff"
-        app:mbn_countBackgroundColor="#ff6f00"
-        app:mbn_countTextColor="#ffffff"
-        app:mbn_rippleColor="#2f424242"
-        app:mbn_selectedIconColor="#000000"
-        app:mbn_shadowColor="#1f212121"  />
-</RelativeLayout>
+</FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.dbandeng.adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,8 @@ public class Adaptor_Product extends RecyclerView.Adapter<Adaptor_Product.myView
         this.produkArrayList = produkArrayList;
     }
 
-    public void onApplySearch(ArrayList<ModulProduk> produkArrayList) {
-        this.produkArrayList = produkArrayList;
+    public void onApplySearch(ArrayList<ModulProduk> filteredProduct) {
+        produkArrayList = filteredProduct;
         notifyDataSetChanged();
     }
 

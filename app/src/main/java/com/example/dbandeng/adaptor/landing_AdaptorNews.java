@@ -20,8 +20,8 @@ public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNew
         this.NewsArrayList = NewsArrayList;
     }
 
-    public void onApplySearch(ArrayList<ModulNews> NewsArrayList) {
-        this.NewsArrayList = NewsArrayList;
+    public void onApplySearch(ArrayList<ModulNews> filteredNews) {
+        NewsArrayList = filteredNews;
         notifyDataSetChanged();
     }
 

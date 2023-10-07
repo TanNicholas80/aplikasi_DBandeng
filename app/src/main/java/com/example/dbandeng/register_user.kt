@@ -1,16 +1,14 @@
 package com.example.dbandeng
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.dbandeng.modul.ModulMitra
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dbandeng.modul.ModulUser
-import com.example.dbandeng.response.LoginRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,9 +41,9 @@ class register_user : AppCompatActivity(), View.OnClickListener {
             login?.enqueue(object : Callback<ModulUser>{
                 override fun onResponse(call: Call<ModulUser>, response: Response<ModulUser>) {
                     if (response.isSuccessful) {
-
                         Toast.makeText(this@register_user, "Berhasil Login user", Toast.LENGTH_LONG).show()
-
+                        val layoutLogin = Intent(this@register_user, login_user::class.java)
+                        startActivity(layoutLogin);
                     } else {
 
                         Toast.makeText(this@register_user, "Gagal Login", Toast.LENGTH_LONG).show()

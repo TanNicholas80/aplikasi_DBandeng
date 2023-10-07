@@ -1,14 +1,15 @@
 package com.example.dbandeng
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dbandeng.modul.ModulUser
+import com.example.dbandeng.response.LoginRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,19 +33,36 @@ class login_user : AppCompatActivity(), View.OnClickListener {
         if(view.id ==R.id.btnLogin) {
             val xEmail = inputEmail.text.toString()
             val xPass = inputPass.text.toString()
-
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
 
             val login: Call<ModulUser>? = interfaceDbandeng?.loginUser(xEmail,xPass)
             login?.enqueue(object : Callback<ModulUser> {
                 override fun onResponse(call: Call<ModulUser>, response: Response<ModulUser>) {
                     if (response.isSuccessful) {
+                        val modulUser: ModulUser? = response.body()
+                        val AuthToken = modulUser?.getToken()
+                        val rep = modulUser?.getResponse()
 
-                        Toast.makeText(this@login_user, "Berhasil Login user", Toast.LENGTH_LONG).show()
-                        val landingPageUser = Intent(this@login_user, lading_page_home::class.java)
+                        val loginRequest = LoginRequest()
+                        loginRequest.token = AuthToken
+                        loginRequest.id = modulUser?.id_User
+                        loginRequest.email = modulUser?.email
+                        loginRequest.response = rep
+
+                        val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
+                        val editor = preferences.edit()
+                        editor.putString("auth_token", AuthToken)
+                        editor.putString("id_user", modulUser?.id_User)
+                        editor.apply()
+
+                        val textToaster = rep
+                        print(textToaster)
+                        print(AuthToken)
+
+                        Toast.makeText(this@login_user, "${textToaster}", Toast.LENGTH_LONG).show()
+                        val landingPageUser = Intent(this@login_user, meow_button_parent::class.java)
                         startActivity(landingPageUser);
                     } else {
-
                         Toast.makeText(this@login_user, "Gagal Login", Toast.LENGTH_LONG).show()
                     }
                 }

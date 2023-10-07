@@ -19,6 +19,15 @@
         android:theme="@style/Theme.DBandeng"
         tools:targetApi="31">
         <activity
+            android:name=".meow_button_parent"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".edit_produk"
             android:exported="false"/>
         <activity
