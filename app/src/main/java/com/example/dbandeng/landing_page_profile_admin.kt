@@ -66,8 +66,8 @@ class landing_page_profile_admin : AppCompatActivity() {
 
 
         val preferences = getSharedPreferences("my_preferences", MODE_PRIVATE)
-        authToken = preferences.getString("auth_token", null).toString();
-        idMitra = preferences.getString("id_mitra", null).toString();
+        authToken = preferences.getString("auth_token", null).toString()
+        idMitra = preferences.getString("id_mitra", null).toString()
         getMitraDataProfile("Bearer " + authToken, idMitra)
 
 
@@ -156,7 +156,7 @@ class landing_page_profile_admin : AppCompatActivity() {
         editPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
         editPopUp.setCancelable(false)
         editPopUp.setContentView(R.layout.layout_popup_edit)
-        editPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        editPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         editPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         // Menyimpan Value Edit
         // val editFotoUser : CircleImageView = findViewById(R.id.Edit_Foto_Mitra)
@@ -220,7 +220,7 @@ class landing_page_profile_admin : AppCompatActivity() {
         logoutPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
         logoutPopUp.setCancelable(false)
         logoutPopUp.setContentView(R.layout.layout_popup_logout)
-        logoutPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        logoutPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         logoutPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val btnYa : Button? = logoutPopUp.findViewById(R.id.btnYalogout)
         val btnTidak : Button? = logoutPopUp.findViewById(R.id.btnTidaklogout)

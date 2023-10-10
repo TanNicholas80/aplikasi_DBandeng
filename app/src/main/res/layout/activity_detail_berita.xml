@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailBerita"
-    android:padding="10dp">
+    tools:context=".DetailBerita">
     <include
         android:id="@+id/toolbar_detail_berita"
         layout="@layout/toolbar"
@@ -13,19 +12,38 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/btn_wrapper">
+        android:layout_alignParentTop="true">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/thumbnail_berita"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:layout_marginTop="65dp"
+        >
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:src="#F1EAEA"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/container_image"
+            >
+                <ImageView
+                    android:id="@+id/thumbnail_berita"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/frame_berita" tools:ignore="MissingConstraints"/>
+                <TextView
+                    android:id="@+id/created_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="16/10/2003"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="295dp"
+                    tools:layout_editor_absoluteY="0dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/judul_berita"
-                android:layout_below="@+id/thumbnail_berita"
+                android:layout_below="@+id/container_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
@@ -41,30 +59,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a felis malesuada, finibus lectus non, eleifend sem. Donec porttitor sagittis lorem quis commodo. Cras vestibulum justo metus, eget iaculis erat consectetur congue. Pellentesque semper non sapien at condimentum. Aliquam nec ipsum ante. Duis euismod luctus tortor, vitae varius urna tempor ac. Curabitur eu tincidunt massa. Maecenas ut libero eget risus convallis condimentum ut ac magna. Vestibulum quam erat, cursus vitae ante at, varius semper ex. Mauris facilisis ante ac urna facilisis mollis. Nulla nisi risus, porta quis imperdiet feugiat, rutrum ut libero. Integer placerat lacus libero, vel maximus turpis posuere vel. Nunc ante nunc, malesuada sed dui a, pharetra convallis dui. Morbi mattis mi semper, elementum urna ornare, placerat ligula. Sed non nibh ac quam bibendum consequat vitae vitae ex."/>
-
-            />
         </RelativeLayout>
     </ScrollView>
-    
-    <LinearLayout
-        android:id="@+id/btn_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_arrow_left_white"
-            android:text="Berita Sebelumnya"
-            android:layout_marginHorizontal="5dp"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/icon_arrow_right_white"
-            android:text="Berita Selanjutnya"
-            android:layout_marginHorizontal="5dp"/>
-    </LinearLayout>
 </RelativeLayout>

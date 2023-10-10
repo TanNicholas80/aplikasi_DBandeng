@@ -1,22 +1,39 @@
 package com.example.dbandeng
 
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.dbandeng.modul.ModulUser
-import com.example.dbandeng.response.ProfilUserResponse
+import com.example.dbandeng.response.*
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,6 +90,43 @@ class landing_page_profiles : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         (requireActivity() as AppCompatActivity).supportActionBar!!.title = "Beranda"
+
+        // Edit Foto User
+        val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            // Callback is invoked after the user selects a media item or closes the
+            // photo picker.
+            if (uri != null) {
+                Log.d("PhotoPicker", "Selected URI: $uri")
+                updateFotoUser(authToken,idUser,uri)
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
+
+        foto_user.setOnClickListener {
+            Log.d("PhotoPicker", "otw selected")
+            try {
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }catch(error: Exception){
+                Log.d("PhotoPicker", error.message.toString())
+            }
+
+            val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        }
+
+        // Setup onclick Button
+        val btnEditUser : Button = profileLayout.findViewById(R.id.Edit_User)
+        btnEditUser.setOnClickListener {
+            authToken = preferences.getString("auth_token", null).toString();
+            idUser = preferences.getString("id_user", null).toString();
+            showEditUserPopUp(requireContext(), "Bearer " + authToken, idUser)
+        }
+
+        val btnLogoutUser : Button = profileLayout.findViewById(R.id.Logout_User)
+        btnLogoutUser.setOnClickListener {
+            authToken = preferences.getString("auth_token", null).toString();
+            logoutUser(requireContext(),"Bearer " + authToken)
+        }
 
         return profileLayout
     }
@@ -132,5 +186,137 @@ class landing_page_profiles : Fragment() {
         })
     }
 
+    private fun showEditUserPopUp(context: Context, authToken: String?, idUser: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val editUserPopUp = Dialog(context)
+        editUserPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        editUserPopUp.setCancelable(false)
+        editUserPopUp.setContentView(R.layout.layout_popup_edit_user)
+        editUserPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        editUserPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val editNamaUser : EditText? = editUserPopUp.findViewById(R.id.Edit_Nama_User)
+        val editAlamatUser : EditText? = editUserPopUp.findViewById(R.id.Edit_Alamat_User)
+        val editNoTelpUser: EditText? = editUserPopUp.findViewById(R.id.Edit_No_HP_User)
+        val editEmailUser: EditText? = editUserPopUp.findViewById(R.id.Edit_Email_User)
+        val btnBatalEditUser: Button? = editUserPopUp.findViewById(R.id.Btn_Batal_Edit_User)
+        val btnSimpanEditUser: Button? = editUserPopUp.findViewById(R.id.Btn_Simpan_Edit_User)
+
+        editNamaUser?.setText(modulUser?.name)
+        editAlamatUser?.setText(modulUser?.alamatUser)
+        editNoTelpUser?.setText(modulUser?.no_user)
+        editEmailUser?.setText(modulUser?.email)
+
+        btnSimpanEditUser?.setOnClickListener {
+            val xNamaUser = editNamaUser?.text.toString()
+            val xAlamatUser = editAlamatUser?.text.toString()
+            val xNoTelpUser = editNoTelpUser?.text.toString()
+            val xEmailUser = editEmailUser?.text.toString()
+
+            val EditDataUser: Call<EditProfilUserRes>? = interfaceDbandeng?.editUser(authToken, idUser, xNamaUser, xEmailUser, xNoTelpUser, xAlamatUser )
+            EditDataUser?.enqueue(object : Callback<EditProfilUserRes> {
+                override fun onResponse(call: Call<EditProfilUserRes>, response: Response<EditProfilUserRes>) {
+                    if (response.isSuccessful) {
+                        val res: EditProfilUserRes? = response.body()
+                        val rep = res?.getResponse()
+                        val textToaster = rep
+                        editUserPopUp.dismiss()
+                        Toast.makeText(requireContext(), "${textToaster}", Toast.LENGTH_LONG).show()
+                        getUserDataProfile(authToken,idUser)
+                    } else {
+                        Toast.makeText(requireContext(), "Profil Gagal Terupdate", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<EditProfilUserRes>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Profil Gagal Terupdate", Toast.LENGTH_LONG).show()
+                }
+
+            })
+        }
+        btnBatalEditUser?.setOnClickListener {
+            editUserPopUp.dismiss()
+        }
+
+        editUserPopUp.show()
+    }
+
+    private fun uriToFile(uri: Uri): File? {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = requireActivity().applicationContext.contentResolver.query(uri, projection, null, null, null)
+        return cursor?.use { c ->
+            val columnIndex = c.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            c.moveToFirst()
+            val filePath = c.getString(columnIndex)
+            File(filePath)
+        }
+    }
+
+    private fun updateFotoUser(authToken: String?, idUser: String?, uri: Uri){
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val file: File? = uriToFile(uri)
+        val requestFile: RequestBody = file!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("foto_user", file.name, requestFile)
+        val editFotoUser: Call<ProfilFotoUserRes>? = interfaceDbandeng?.editFotoUser("Bearer "+authToken,idUser,body)
+
+        editFotoUser?.enqueue(object : Callback<ProfilFotoUserRes> {
+            override fun onResponse(call: Call<ProfilFotoUserRes>, response: Response<ProfilFotoUserRes>) {
+                Log.d("sendPhoto", "a" + call.request().toString())
+                Log.d("sendPhoto", response.code().toString() + " " + response.message())
+                if(response.isSuccessful) {
+                    Toast.makeText(requireContext(), "Berhasil Update Foto", Toast.LENGTH_LONG).show()
+                    getUserDataProfile("Bearer " + authToken,idUser)
+                }
+            }
+
+            override fun onFailure(call: Call<ProfilFotoUserRes>, t: Throwable) {
+                Log.d("sendPhoto", t.message.toString())
+                Toast.makeText(requireContext(), "Gagal Update Foto", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
+
+    private fun logoutUser(context: Context, authToken: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val logoutUserPopUp = Dialog(context)
+        logoutUserPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        logoutUserPopUp.setCancelable(false)
+        logoutUserPopUp.setContentView(R.layout.layout_popup_logout)
+        logoutUserPopUp.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        logoutUserPopUp.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val btnYa : Button? = logoutUserPopUp.findViewById(R.id.btnYalogout)
+        val btnTidak : Button? = logoutUserPopUp.findViewById(R.id.btnTidaklogout)
+
+        btnYa?.setOnClickListener {
+            val LogoutUser: Call<LogoutUserRes>? = interfaceDbandeng?.logoutUser(authToken)
+
+            LogoutUser?.enqueue(object : Callback<LogoutUserRes> {
+                override fun onResponse(call: Call<LogoutUserRes>, response: Response<LogoutUserRes>) {
+                    if(response.isSuccessful) {
+                        val res : LogoutUserRes? = response.body()
+                        val rep = res?.getResponse()
+                        val textToaster = rep
+                        Toast.makeText(requireContext(), "${textToaster}", Toast.LENGTH_LONG).show()
+                        val loginUser_layout = Intent(requireContext(), login_user::class.java);// ntar ganti beranda lagi
+
+                        startActivity(loginUser_layout);
+                    } else {
+                        Toast.makeText(requireContext(), "Logout Gagal", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<LogoutUserRes>, t: Throwable) {
+                    Toast.makeText(requireContext(), "Logout User Gagal", Toast.LENGTH_LONG).show()
+                }
+
+            })
+        }
+
+        btnTidak?.setOnClickListener {
+            logoutUserPopUp.dismiss()
+        }
+
+        logoutUserPopUp.show()
+    }
 }

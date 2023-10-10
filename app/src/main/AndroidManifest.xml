@@ -19,6 +19,24 @@
         android:theme="@style/Theme.DBandeng"
         tools:targetApi="31">
         <activity
+            android:name=".deskripsi_article"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".deskripsi_produk"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".meow_button_parent"
             android:exported="true">
             <intent-filter>

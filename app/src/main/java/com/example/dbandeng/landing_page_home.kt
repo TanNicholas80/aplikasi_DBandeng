@@ -55,9 +55,9 @@ class landing_page_home : Fragment() {
         homeLayout = inflater.inflate(R.layout.fragment_landing_page_home, container, false)
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        imageList.add(SlideModel(R.drawable.news1_min))
-        imageList.add(SlideModel(R.drawable.news2_min))
-        imageList.add(SlideModel(R.drawable.news3_min))
+        imageList.add(SlideModel(R.drawable.welcome_1))
+        imageList.add(SlideModel(R.drawable.welcome_2))
+        imageList.add(SlideModel(R.drawable.welcome_3))
 
         val imageSlider = homeLayout.findViewById<ImageSlider>(R.id.image_slider_home)
 

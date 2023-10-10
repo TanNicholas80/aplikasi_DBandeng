@@ -54,7 +54,7 @@
                         android:textSize="24dp"
                         android:textColor="#0F75BD"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="LOGIN" />
+                        android:text="LOGIN USER" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                         android:layout_height="48dp"
                         android:paddingHorizontal="15dp"
                         android:layout_marginTop="20dp"
-                        android:elevation="10dp"
+                        android:elevation="3dp"
                         android:inputType="textEmailAddress"
                         android:hint="Masukan Email"
                         android:background="@drawable/rounded_edit_text"
@@ -79,9 +79,9 @@
                         android:layout_height="48dp"
                         android:paddingHorizontal="15dp"
                         android:layout_marginTop="10dp"
-                        android:elevation="10dp"
-                        android:inputType="textPassword"
+                        android:elevation="3dp"
                         android:drawableRight="@drawable/pass"
+                        android:inputType="textPassword"
                         android:background="@drawable/rounded_edit_text"
                         android:hint="Masukan Password"
                     />

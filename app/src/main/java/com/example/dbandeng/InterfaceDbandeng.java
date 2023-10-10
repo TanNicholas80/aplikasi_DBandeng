@@ -42,14 +42,26 @@ public interface InterfaceDbandeng {
     Call<ProfilUserResponse> getUser(@Header("Authorization") String token, @Path("id") String id);
 
     // Edit Profile User
+    @Headers("Accept: application/json")
     @FormUrlEncoded
     @POST("edit/user/{id}")
-    Call<ModulUser> editUser (@Header("Authorization") String token,
+    Call<EditProfilUserRes> editUser (@Header("Authorization") String token,
                               @Path("id") String id,
                               @Field("name") String name,
                               @Field("email") String email,
                               @Field("no_user") String no_user,
                               @Field("alamatUser") String alamatUser);
+
+    // Edit FOTO profil User
+    @Headers("Accept: application/json")
+    @Multipart
+    @POST("edit-foto/user/{id}")
+    Call<ProfilFotoUserRes> editFotoUser (@Header("Authorization") String token,
+                                          @Path("id") String id,
+                                          @Part MultipartBody.Part foto_user);
+    // logout User
+    @GET("logout-user")
+    Call<LogoutUserRes> logoutUser(@Header("Authorization") String token);
 
     //Get Mitra Profile
     @Headers("Accept: application/json")
