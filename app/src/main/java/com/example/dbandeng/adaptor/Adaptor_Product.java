@@ -22,8 +22,16 @@ import java.util.ArrayList;
 
 public class Adaptor_Product extends RecyclerView.Adapter<Adaptor_Product.myViewHolder> {
     ArrayList<ModulProduk> produkArrayList;
+    int limit;
+    boolean isLimited = false;
     public Adaptor_Product(ArrayList<ModulProduk> produkArrayList) {
         this.produkArrayList = produkArrayList;
+        this.limit = -1;
+    }
+
+    public void setLimit(int limit){
+        this.isLimited = true;
+        this.limit = limit;
     }
 
     public void onApplySearch(ArrayList<ModulProduk> filteredProduct) {
@@ -67,7 +75,11 @@ public class Adaptor_Product extends RecyclerView.Adapter<Adaptor_Product.myView
 
     @Override
     public int getItemCount() {
-        return produkArrayList.size();
+       if(isLimited){
+           return Math.min(produkArrayList.size(), limit);
+       }else{
+           return produkArrayList.size();
+       }
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{

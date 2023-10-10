@@ -154,10 +154,11 @@ class landing_page_profiles : Fragment() {
     private fun getUserDataProfile(authToken: String?, idUser: String?) {
         val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
         val getDataUser: Call<ProfilUserResponse>? = interfaceDbandeng?.getUser(authToken, idUser)
-        Log.d("cekToken", authToken + " -- " + idUser);
         getDataUser?.enqueue(object : Callback<ProfilUserResponse> {
             override fun onResponse(call: Call<ProfilUserResponse>, response: Response<ProfilUserResponse>) {
-                Log.d("cekToken", response.code().toString() + " " + response.message())
+                Log.d("RegisUser", "a a " + call.request().toString());
+                Log.d("RegisUser", "b a " + response.toString());
+                Log.d("RegisUser", "c a " + authToken + " " + idUser);
                 if (response.isSuccessful) {
                     val res: ProfilUserResponse? = response.body()
                     if (res != null) {
@@ -171,11 +172,7 @@ class landing_page_profiles : Fragment() {
                     alamat_user.setText(modulUser?.alamatUser)
                     No_User.setText(modulUser?.no_user)
                     email_user.setText(modulUser?.email)
-
-                    //Toast.makeText(this@landing_page_profile, "Berhasil Login user", Toast.LENGTH_LONG).show()
-
                 } else {
-
                     Toast.makeText(requireContext(), "Gagal Login", Toast.LENGTH_LONG).show()
                 }
             }

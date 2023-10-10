@@ -1,9 +1,13 @@
 package com.example.dbandeng
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,8 +18,19 @@ import com.example.dbandeng.adaptor.AdaptorMitra
 import com.example.dbandeng.adaptor.Adaptor_Product
 import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulMitra
+import com.example.dbandeng.modul.ModulMitraLP
 import com.example.dbandeng.modul.ModulNews
 import com.example.dbandeng.modul.ModulProduk
+import com.example.dbandeng.modul.ModulUser
+import com.example.dbandeng.response.GetAllMitraLandingResponse
+import com.example.dbandeng.response.GetArticleResponse
+import com.example.dbandeng.response.GetProductLandingRes
+import com.example.dbandeng.response.ProfilUserResponse
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,14 +46,22 @@ class landing_page_home : Fragment() {
     // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
-    var recyclerView: RecyclerView? = null
+    var recyclerViewProduk: RecyclerView? = null
+    var recyclerViewBerita: RecyclerView? = null
+    var recyclerViewMitra: RecyclerView? = null
     var modulProdukDump: ModulProduk? = null
     var ProdukArrayList = ArrayList<ModulProduk>()
     var modulNewsDump: ModulNews? = null
     var NewsArrayList = ArrayList<ModulNews>()
     var modulMitraDump: ModulMitra? = null
-    var MitraArrayList = ArrayList<ModulMitra>()
+    var MitraArrayList = ArrayList<ModulMitraLP>()
+    lateinit var adaptorProduk: Adaptor_Product
     private lateinit var homeLayout: View
+
+    lateinit var fotoProfil: CircleImageView;
+    lateinit var namaUser: TextView;
+    lateinit var modulUser: ModulUser;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,7 +75,34 @@ class landing_page_home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        getProdukLanding();
+        getNewsLanding();
+        getMitraLanding();
+
         homeLayout = inflater.inflate(R.layout.fragment_landing_page_home, container, false)
+
+        recyclerViewProduk = homeLayout.findViewById(R.id.recycler_produk_baru)
+        recyclerViewBerita = homeLayout.findViewById(R.id.recycler_berita_terbaru)
+        recyclerViewMitra = homeLayout.findViewById(R.id.recycler_mitra)
+        fotoProfil = homeLayout.findViewById(R.id.foto_profile_home)
+        namaUser = homeLayout.findViewById(R.id.nama_user_home)
+
+        val preferences = context?.getSharedPreferences("my_preferences", AppCompatActivity.MODE_PRIVATE)
+        val authToken = preferences?.getString("auth_token", null).toString();
+        val idUser = preferences?.getString("id_user", null).toString();
+
+        getUserDataProfile("Bearer " + authToken, idUser)
+
+        //        tblEditProduk.setOnClickListener(this);
+//        tblDeleteProduk.setOnClickListener(this);
+        // setup Data RecyclerView
+//        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
+//        for (int i = 0; i < 15; i++){
+//            produkArrayList.add(modulProdukDump);
+//        }
+
+
         val imageList = ArrayList<SlideModel>() // Create image list
 
         imageList.add(SlideModel(R.drawable.welcome_1))
@@ -63,36 +113,25 @@ class landing_page_home : Fragment() {
 
         imageSlider.setImageList(imageList)
         imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
-        // setup recyclerview Product
-//        val modulProdukDump = ModulProduk("1", "Babi Goreng", "Sholeh Ac", "gak halal", "18", "10","18000")
-//        for (i in 0..14) {
-//            ProdukArrayList.add(modulProdukDump)
-//        }
-        recyclerView = homeLayout.findViewById(R.id.recycler_produk_baru)
+
+
         val layoutManagerProduk = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = layoutManagerProduk
-        val adaptorProduk = Adaptor_Product(ProdukArrayList)
-        recyclerView?.setAdapter(adaptorProduk)
-        // setup recyclerview News
-//        val modulNewsDump = ModulNews("1", "Kampung UMKM Bandeng", "Kampung UMKM Bandeng merupakan sebuah UMKM","", "18/10/2021")
-//        for (i in 0..14) {
-//            NewsArrayList.add(modulNewsDump)
-//        }
-        recyclerView = homeLayout.findViewById(R.id.recycler_berita_terbaru)
+        recyclerViewProduk?.layoutManager = layoutManagerProduk
+        adaptorProduk = Adaptor_Product(ProdukArrayList)
+        adaptorProduk.setLimit(3);
+        recyclerViewProduk?.setAdapter(adaptorProduk)
+
+
         val layoutManagerNews = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = layoutManagerNews
+        recyclerViewBerita?.layoutManager = layoutManagerNews
         val adaptorNews = landing_AdaptorNews(NewsArrayList)
-        recyclerView?.setAdapter(adaptorNews)
-        // setup recyclerview Mitra
-//        val modulMitraDump = ModulMitra("1", "nicholas", "Juwana", "laki", "082134081040", "Jl.Situ Aja", "admin@gmail.com", "Nicholas123", "","")
-//        for (i in 0..14) {
-//            MitraArrayList.add(modulMitraDump)
-//        }
-        recyclerView = homeLayout.findViewById(R.id.recycler_mitra)
+        recyclerViewBerita?.setAdapter(adaptorNews)
+
+
         val layoutManagerMitra = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = layoutManagerMitra
+        recyclerViewMitra?.layoutManager = layoutManagerMitra
         val adaptor_mitra = AdaptorMitra(MitraArrayList)
-        recyclerView?.setAdapter(adaptor_mitra)
+        recyclerViewMitra?.setAdapter(adaptor_mitra)
 
         return homeLayout
     }
@@ -115,5 +154,96 @@ class landing_page_home : Fragment() {
 //                    putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    fun getProdukLanding() {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val getProduk = interfaceDbandeng.GetAllProduk()
+        getProduk.enqueue(object : Callback<GetProductLandingRes> {
+            override fun onResponse(call: Call<GetProductLandingRes>, response: Response<GetProductLandingRes>) {
+                val responseData: List<ModulProduk> = response.body()!!.data
+                ProdukArrayList = java.util.ArrayList<ModulProduk>(responseData)
+                adaptorProduk = Adaptor_Product(ProdukArrayList)
+                adaptorProduk.setLimit(8);
+                recyclerViewProduk?.setAdapter(adaptorProduk)
+            }
+
+            override fun onFailure(call: Call<GetProductLandingRes>, t: Throwable) {
+                Toast.makeText(requireContext(), "gagal get produk" + t.message, Toast.LENGTH_LONG).show()
+                Log.d("crud_produk", "error" + t.message)
+            }
+        })
+    }
+
+    fun getNewsLanding() {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val getNews = interfaceDbandeng.GetArticle()
+        getNews.enqueue(object : Callback<GetArticleResponse> {
+            override fun onResponse(call: Call<GetArticleResponse>, response: Response<GetArticleResponse>) {
+                if(response.isSuccessful){
+                    val responseData: List<ModulNews>? = response.body()?.data
+                    NewsArrayList = java.util.ArrayList<ModulNews>(responseData)
+                    val adaptorNews = landing_AdaptorNews(NewsArrayList)
+                    recyclerViewBerita?.setAdapter(adaptorNews)
+                }
+            }
+
+            override fun onFailure(call: Call<GetArticleResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), "gagal get News" + t.message, Toast.LENGTH_LONG)
+                Log.d("crud_produk", "error" + t.message)
+            }
+        })
+    }
+
+    fun getMitraLanding() {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
+        val getAllMitra = interfaceDbandeng.getAllMitra()
+        getAllMitra.enqueue(object : Callback<GetAllMitraLandingResponse> {
+            override fun onResponse(call: Call<GetAllMitraLandingResponse>, response: Response<GetAllMitraLandingResponse>) {
+                if(response.isSuccessful){
+                    val responseData: GetAllMitraLandingResponse? = response.body()
+                    MitraArrayList = responseData!!.data
+                    val adaptor_mitra = AdaptorMitra(MitraArrayList)
+                    recyclerViewMitra?.setAdapter(adaptor_mitra)
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllMitraLandingResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), "gagal get News" + t.message, Toast.LENGTH_LONG)
+                Log.d("crud_produk", "error" + t.message)
+            }
+        })
+    }
+
+    private fun getUserDataProfile(authToken: String?, idUser: String?) {
+        val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java);
+        val getDataUser: Call<ProfilUserResponse>? = interfaceDbandeng?.getUser(authToken, idUser)
+        getDataUser?.enqueue(object : Callback<ProfilUserResponse> {
+            override fun onResponse(call: Call<ProfilUserResponse>, response: Response<ProfilUserResponse>) {
+                Log.d("RegisUser", "a" + call.request().toString());
+                Log.d("RegisUser", "b" + response.toString());
+                Log.d("RegisUser", "c" + authToken + " " + idUser);
+                if (response.isSuccessful) {
+                    val res: ProfilUserResponse? = response.body()
+                    if (res != null) {
+                        modulUser = res.getModulUser()
+                    }
+                    val ImageUrl = modulUser?.foto_user
+                    namaUser.setText(modulUser.name)
+                    if(ImageUrl?.isEmpty() == false) {
+                        Picasso.get().load(ImageUrl).into(fotoProfil)
+                    }else{
+                        fotoProfil.setImageResource(R.drawable.user_profile_empty)
+                    }
+                } else {
+
+                    Toast.makeText(requireContext(), "Gagal Login", Toast.LENGTH_LONG).show()
+                }
+            }
+            override fun onFailure(call: Call<ProfilUserResponse>, t: Throwable) {
+                Log.d("RegisUser", t.message.toString());
+                Toast.makeText(requireContext(), "Gagal" + t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

@@ -1,6 +1,8 @@
 package com.example.dbandeng;
 
 import com.example.dbandeng.modul.ModulMitra;
+import com.example.dbandeng.modul.ModulMitraLP;
+import com.example.dbandeng.modul.ModulResponse;
 import com.example.dbandeng.modul.ModulUser;
 import com.example.dbandeng.response.*;
 
@@ -135,6 +137,10 @@ public interface InterfaceDbandeng {
     @Headers("Accept: application/json")
     @GET("article/read-all")
     Call<GetArticleResponse> GetArticle();
+
+    @Headers("Accept: application/json")
+    @GET("mitra/all")
+    Call<GetAllMitraLandingResponse> getAllMitra();
 
     @Headers("Accept: application/json")
     @GET("product/home-aplikasi")

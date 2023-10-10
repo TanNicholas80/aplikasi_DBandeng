@@ -39,6 +39,8 @@ class landing_page_new : Fragment() {
     var modulNewsDump: ModulNews? = null
     var NewsArrayList : ArrayList<ModulNews>? = null
     var newsAdaptor : landing_AdaptorNews? = null
+
+
     private lateinit var NewsToolbar: Toolbar
     private lateinit var newsLayout: View
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -30,6 +30,7 @@ class login_user : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
+
         if(view.id ==R.id.btnLogin) {
             val xEmail = inputEmail.text.toString()
             val xPass = inputPass.text.toString()
@@ -53,6 +54,8 @@ class login_user : AppCompatActivity(), View.OnClickListener {
                         val editor = preferences.edit()
                         editor.putString("auth_token", AuthToken)
                         editor.putString("id_user", modulUser?.id_User)
+                        editor.putString("nama_user", modulUser?.name)
+                        editor.putString("foto_user", modulUser?.foto_user)
                         editor.apply()
 
                         val textToaster = rep

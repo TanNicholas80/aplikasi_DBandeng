@@ -10,13 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.dbandeng.R;
 import com.example.dbandeng.modul.ModulMitra;
+import com.example.dbandeng.modul.ModulMitraLP;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class AdaptorMitra extends RecyclerView.Adapter<AdaptorMitra.myViewHolder> {
 
-    ArrayList<ModulMitra> MitraArrayList;
-    public AdaptorMitra(ArrayList<ModulMitra> MitraArrayList) {
+    ArrayList<ModulMitraLP> MitraArrayList;
+    public AdaptorMitra(ArrayList<ModulMitraLP> MitraArrayList) {
         this.MitraArrayList = MitraArrayList;
     }
 
@@ -31,8 +33,8 @@ public class AdaptorMitra extends RecyclerView.Adapter<AdaptorMitra.myViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AdaptorMitra.myViewHolder holder, int position) {
-        holder.nama_mitra.setText(MitraArrayList.get(position).getNama_mitra());
-        holder.foto_mitra.setImageResource(R.drawable.juwana);
+        holder.nama_mitra.setText(MitraArrayList.get(position).getNamaMitra());
+        Picasso.get().load(MitraArrayList.get(position).getFoto_mitra()).resize(300, 300).into(holder.foto_mitra);
     }
 
     @Override
