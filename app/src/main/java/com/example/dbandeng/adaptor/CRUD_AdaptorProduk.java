@@ -2,6 +2,7 @@ package com.example.dbandeng.adaptor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,9 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
         return new CRUD_AdaptorProduk.myViewHolder(view);
     }
 
-    public void onApplySearch(ArrayList<ModulProdukNew> produkArrayList) {
-        this.produkArrayList = produkArrayList;
+    public void onApplySearch(ArrayList<ModulProdukNew> searchList) {
+        produkArrayList = searchList;
+        Log.d("test1234",searchList.toString() );
         notifyDataSetChanged();
     }
 

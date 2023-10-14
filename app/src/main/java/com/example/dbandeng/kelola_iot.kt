@@ -28,6 +28,7 @@ class kelola_iot : AppCompatActivity() {
     private lateinit var statusConveyor: TextView
     private lateinit var iconStatusConveyor: ImageView
     private lateinit var switchConveyor: SwitchCompat
+    var firstConnection: Boolean= true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kelola_iot)
@@ -60,7 +61,9 @@ class kelola_iot : AppCompatActivity() {
         }
 
         switchConveyor.setOnCheckedChangeListener { buttonView, isChecked ->
-            sendSocketPerintahIOT(isChecked)
+            if(!firstConnection){
+                sendSocketPerintahIOT(isChecked)
+            }
         }
 
         socketHandler.on("cmd_iot", onNewMessagePerintah)
@@ -94,12 +97,15 @@ class kelola_iot : AppCompatActivity() {
 
     private val onNewMessageAuth = Emitter.Listener { args ->
         val data = args[0]
-
-        if(data == "success"){
-            iotConnectStatus.setText("Perangkat berhasil terkoneksi!")
-        }else{
-            iotConnectStatus.setText("Gagal terkoneksi, harap coba lagi")
-        }
+        runOnUiThread(kotlinx.coroutines.Runnable{
+            if(data == "success"){
+                switchConveyor.isChecked = true
+                iotConnectStatus.setText("Perangkat berhasil terkoneksi!")
+                firstConnection = false
+            }else{
+                iotConnectStatus.setText("Gagal terkoneksi, harap coba lagi")
+            }
+        })
         Log.d("socket",data.toString())
     }
 

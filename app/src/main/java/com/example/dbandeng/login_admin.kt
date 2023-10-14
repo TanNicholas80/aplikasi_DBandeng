@@ -10,14 +10,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.response.LoginRequest
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class login_admin : AppCompatActivity(), View.OnClickListener {
-    lateinit var inputEmail: EditText
-    lateinit var inputPass: EditText
+    lateinit var inputEmail: TextInputLayout
+    lateinit var inputPass: TextInputLayout
     lateinit var btnLogin_admin: Button
     var interfaceDbandeng: InterfaceDbandeng? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +34,8 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
         if(view.id==R.id.btnLogin) {
             // Login Admin
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
-            val xEmail = inputEmail.text.toString()
-            val xPass = inputPass.text.toString()
+            val xEmail = inputEmail.editText!!.text.toString()
+            val xPass = inputPass.editText!!.text.toString()
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
             val login: Call<ModulMitra>? = interfaceDbandeng?.loginMitra(xEmail, xPass)
             login?.enqueue(object : Callback<ModulMitra> {

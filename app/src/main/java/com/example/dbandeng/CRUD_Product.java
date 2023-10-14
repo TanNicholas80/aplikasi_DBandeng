@@ -43,6 +43,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
     Button tblCreateProduk;
 //    ImageButton tblEditProduk, tblDeleteProduk;
     ArrayList<ModulProdukNew> produkArrayList=new ArrayList<>();
+    CRUD_AdaptorProduk adaptorProduk;
     private Toolbar CRUDToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +96,8 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
                 String responseData = response.body().getData();
                 Gson gson = new Gson();
                 ModulMitra modelMitra = gson.fromJson(responseData, ModulMitra.class);
-                ArrayList<ModulProdukNew> produkMitra = new ArrayList(modelMitra.getProducts());
-                CRUD_AdaptorProduk adaptorProduk=new CRUD_AdaptorProduk(produkMitra);
+                produkArrayList = new ArrayList(modelMitra.getProducts());
+                adaptorProduk=new CRUD_AdaptorProduk(produkArrayList);
                 recyclerView.setAdapter(adaptorProduk);
             }
 
@@ -110,7 +111,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        CRUD_AdaptorProduk adaptorCRUDProduk = new CRUD_AdaptorProduk(produkArrayList);
+        adaptorProduk = new CRUD_AdaptorProduk(produkArrayList);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_dbandeng, menu);
         MenuItem menuItem = menu.findItem(R.id.search_bar);
@@ -126,17 +127,23 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<ModulProdukNew> searchList = new ArrayList<>();
-
+                Log.d("test123",newText );
+                if(produkArrayList.isEmpty()){
+                    return true;
+                }
                 if (newText != null) {
                     for (ModulProdukNew i : produkArrayList) {
                         if (i.getNmProduk().toLowerCase(Locale.ROOT).contains(newText)) {
                             searchList.add(i);
+                            Log.d("test123",i.getNmProduk().toLowerCase(Locale.ROOT)+ "==="+newText );
+
                         }
                     }
                     if (searchList.isEmpty()) {
                         Toast.makeText(CRUD_Product.this, "Data Produk Tidak Ditemukan", Toast.LENGTH_SHORT).show();
                     } else {
-                        adaptorCRUDProduk.onApplySearch(searchList);
+                        Log.d("test123",searchList.toString() );
+                        adaptorProduk.onApplySearch(searchList);
                     }
                 }
                 return true;
