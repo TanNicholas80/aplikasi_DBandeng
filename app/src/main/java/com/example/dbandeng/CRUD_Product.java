@@ -41,7 +41,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerView;
     ModulProduk modulProdukDump;
     Button tblCreateProduk;
-//    ImageButton tblEditProduk, tblDeleteProduk;
+    String authToken;
     ArrayList<ModulProdukNew> produkArrayList=new ArrayList<>();
     private Toolbar CRUDToolbar;
     @Override
@@ -62,7 +62,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
 //        }
 
         SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
-        String authToken = preferences.getString("auth_token", null);
+        authToken = preferences.getString("auth_token", null);
         String idMitra = preferences.getString("id_mitra", null);
         recyclerView=findViewById(R.id.recyclerProduk);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -96,7 +96,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
                 Gson gson = new Gson();
                 ModulMitra modelMitra = gson.fromJson(responseData, ModulMitra.class);
                 ArrayList<ModulProdukNew> produkMitra = new ArrayList(modelMitra.getProducts());
-                CRUD_AdaptorProduk adaptorProduk=new CRUD_AdaptorProduk(produkMitra);
+                CRUD_AdaptorProduk adaptorProduk=new CRUD_AdaptorProduk(produkMitra, authToken);
                 recyclerView.setAdapter(adaptorProduk);
             }
 
@@ -110,7 +110,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        CRUD_AdaptorProduk adaptorCRUDProduk = new CRUD_AdaptorProduk(produkArrayList);
+        CRUD_AdaptorProduk adaptorCRUDProduk = new CRUD_AdaptorProduk(produkArrayList, authToken);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_dbandeng, menu);
         MenuItem menuItem = menu.findItem(R.id.search_bar);
@@ -150,11 +150,5 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         if(v.getId()==R.id.crud_btnTambah) {
             startActivity(new Intent(CRUD_Product.this,createproduct.class));
         }
-//        else if(v.getId()==R.id.crud_btnEdit) {
-//            startActivity(new Intent(CRUD_Product.this,createproduct.class));
-//        }
-//        else if (v.getId()==R.id.crud_btnHapus) {
-//
-//        }
     }
 }

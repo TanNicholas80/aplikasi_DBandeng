@@ -19,24 +19,6 @@
         android:theme="@style/Theme.DBandeng"
         tools:targetApi="31">
         <activity
-            android:name=".deskripsi_article"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".deskripsi_produk"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".meow_button_parent"
             android:exported="true">
             <intent-filter>
@@ -47,9 +29,6 @@
         </activity>
         <activity
             android:name=".edit_produk"
-            android:exported="false"/>
-        <activity
-            android:name=".landing_page_profile"
             android:exported="false"/>
         <activity
             android:name=".createproduct"
@@ -63,7 +42,7 @@
         <activity
             android:name=".DetailBerita"
             android:exported="true"
-            android:parentActivityName=".landing_page_news">
+            android:parentActivityName=".landing_page_new">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -73,7 +52,7 @@
         <activity
             android:name=".DetailProduk"
             android:exported="true"
-            android:parentActivityName=".landing_page_product">
+            android:parentActivityName=".landing_page_products">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -91,22 +70,13 @@
         </activity>
         <activity
             android:name=".landing_page_profile_admin"
-            android:exported="true"
-            android:parentActivityName=".lading_page_home">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".landing_page_news"
-            android:exported="true"
-            android:parentActivityName=".lading_page_home"/>
-        <activity
-            android:name=".landing_page_product"
-            android:exported="true"
-            android:parentActivityName=".lading_page_home"/>
         <activity
             android:name=".CRUD_Product"
             android:exported="true"
@@ -121,15 +91,6 @@
             android:name=".kelola_iot"
             android:exported="true"
             android:parentActivityName=".Beranda">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".lading_page_home"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

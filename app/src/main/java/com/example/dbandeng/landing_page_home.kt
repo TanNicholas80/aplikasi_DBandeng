@@ -17,11 +17,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.dbandeng.adaptor.AdaptorMitra
 import com.example.dbandeng.adaptor.Adaptor_Product
 import com.example.dbandeng.adaptor.landing_AdaptorNews
-import com.example.dbandeng.modul.ModulMitra
-import com.example.dbandeng.modul.ModulMitraLP
-import com.example.dbandeng.modul.ModulNews
-import com.example.dbandeng.modul.ModulProduk
-import com.example.dbandeng.modul.ModulUser
+import com.example.dbandeng.modul.*
 import com.example.dbandeng.response.GetAllMitraLandingResponse
 import com.example.dbandeng.response.GetArticleResponse
 import com.example.dbandeng.response.GetProductLandingRes
@@ -93,15 +89,6 @@ class landing_page_home : Fragment() {
         val idUser = preferences?.getString("id_user", null).toString();
 
         getUserDataProfile("Bearer " + authToken, idUser)
-
-        //        tblEditProduk.setOnClickListener(this);
-//        tblDeleteProduk.setOnClickListener(this);
-        // setup Data RecyclerView
-//        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
-//        for (int i = 0; i < 15; i++){
-//            produkArrayList.add(modulProdukDump);
-//        }
-
 
         val imageList = ArrayList<SlideModel>() // Create image list
 
@@ -237,12 +224,12 @@ class landing_page_home : Fragment() {
                     }
                 } else {
 
-                    Toast.makeText(requireContext(), "Gagal Login", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Gagal Get Informasi", Toast.LENGTH_LONG).show()
                 }
             }
             override fun onFailure(call: Call<ProfilUserResponse>, t: Throwable) {
                 Log.d("RegisUser", t.message.toString());
-                Toast.makeText(requireContext(), "Gagal" + t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Gagal Get Informasi", Toast.LENGTH_SHORT).show()
             }
         })
     }
