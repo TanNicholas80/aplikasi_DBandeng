@@ -10,13 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dbandeng.modul.ModulUser
 import com.example.dbandeng.response.LoginRequest
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class login_user : AppCompatActivity(), View.OnClickListener {
-    lateinit var inputEmail: EditText
-    lateinit var inputPass: EditText
+    lateinit var inputEmail: TextInputLayout
+    lateinit var inputPass: TextInputLayout
     lateinit var btnLogin_user: Button
     var interfaceDbandeng: InterfaceDbandeng? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +33,8 @@ class login_user : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
 
         if(view.id ==R.id.btnLogin) {
-            val xEmail = inputEmail.text.toString()
-            val xPass = inputPass.text.toString()
+            val xEmail = inputEmail.editText!!.text.toString()
+            val xPass = inputPass.editText!!.text.toString()
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
 
             val login: Call<ModulUser>? = interfaceDbandeng?.loginUser(xEmail,xPass)

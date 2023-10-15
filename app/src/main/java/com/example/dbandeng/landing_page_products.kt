@@ -103,7 +103,6 @@ class landing_page_products : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 val searchList = ArrayList<ModulProduk>()
 
