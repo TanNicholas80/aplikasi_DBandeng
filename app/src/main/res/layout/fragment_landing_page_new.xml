@@ -6,7 +6,7 @@
              tools:context=".landing_page_new">
     <include
         android:id="@+id/news_toolbar"
-        layout="@layout/toolbar"
+        layout="@layout/user_toolbar"
     />
     <LinearLayout
         android:layout_marginTop="65dp"

@@ -4,10 +4,15 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +39,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,9 +93,12 @@ class landing_page_profiles : Fragment() {
         // setup toolbar
         profileToolbar = profileLayout.findViewById(R.id.profile_toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(profileToolbar)
+        val titleprofil = "USER PROFILE"
 
-        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (requireActivity() as AppCompatActivity).supportActionBar!!.title = "Beranda"
+        val spannableString = SpannableString(titleprofil)
+        spannableString.setSpan(ForegroundColorSpan(Color.WHITE), 0, titleprofil.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), 0, titleprofil.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        (requireActivity() as AppCompatActivity).supportActionBar!!.title = spannableString
 
         // Edit Foto User
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->

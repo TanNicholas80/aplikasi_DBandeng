@@ -1,6 +1,12 @@
 package com.example.dbandeng
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -65,9 +71,12 @@ class landing_page_products : Fragment() {
         // setup toolbar
         produkToolbar = productLayout.findViewById(R.id.produk_toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(produkToolbar)
+        val titleproduk = "PRODUCTS"
 
-        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (requireActivity() as AppCompatActivity).supportActionBar!!.title = "Beranda"
+        val spannableString = SpannableString(titleproduk)
+        spannableString.setSpan(ForegroundColorSpan(Color.WHITE), 0, titleproduk.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), 0, titleproduk.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        (requireActivity() as AppCompatActivity).supportActionBar!!.title = spannableString
 
         return productLayout
     }

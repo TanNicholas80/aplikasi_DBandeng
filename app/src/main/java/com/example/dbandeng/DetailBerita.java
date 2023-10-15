@@ -1,5 +1,11 @@
 package com.example.dbandeng;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +25,12 @@ public class DetailBerita extends AppCompatActivity {
         DetailBeritaToolbar = findViewById(R.id.toolbar_detail_berita);
         setSupportActionBar(DetailBeritaToolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Kembali");
+        String titledtlnews = "DETAIL ARTICLE";
+
+        SpannableString spannableString = new SpannableString(titledtlnews);
+        spannableString.setSpan(new ForegroundColorSpan(Color.WHITE), 0, titledtlnews.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, titledtlnews.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(spannableString);
 
         txtJdlArticle = findViewById(R.id.judul_berita);
         txtIsiArticle = findViewById(R.id.isi_berita);

@@ -1,6 +1,12 @@
 package com.example.dbandeng
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -69,9 +75,12 @@ class landing_page_new : Fragment() {
         // setup toolbar
         NewsToolbar = newsLayout.findViewById(R.id.news_toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(NewsToolbar)
+        val titlearticle = "ARTICLES"
 
-        (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        (requireActivity() as AppCompatActivity).supportActionBar!!.title = "Beranda"
+        val spannableString = SpannableString(titlearticle)
+        spannableString.setSpan(ForegroundColorSpan(Color.WHITE), 0, titlearticle.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), 0, titlearticle.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        (requireActivity() as AppCompatActivity).supportActionBar!!.title = spannableString
         // setup carousel
         val imageList = ArrayList<SlideModel>() // Create image list
 

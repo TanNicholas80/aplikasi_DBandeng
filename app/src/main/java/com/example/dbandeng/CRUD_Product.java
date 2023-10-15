@@ -51,16 +51,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_crud_product);
 
         tblCreateProduk = findViewById(R.id.crud_btnTambah);
-//        tblEditProduk = findViewById(R.id.crud_btnEdit);
-//        tblDeleteProduk = findViewById(R.id.crud_btnHapus);
         tblCreateProduk.setOnClickListener(this);
-//        tblEditProduk.setOnClickListener(this);
-//        tblDeleteProduk.setOnClickListener(this);
-        // setup Data RecyclerView
-//        ModulProduk modulProdukDump= new ModulProduk("1","Bandeng Enak", "Sholeh AC", "5cm", "" ,"20", "50000") ;
-//        for (int i = 0; i < 15; i++){
-//            produkArrayList.add(modulProdukDump);
-//        }
 
         SharedPreferences preferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
         authToken = preferences.getString("auth_token", null);
@@ -73,10 +64,6 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
             Log.d("crud_produk", e.getMessage());
         }
-
-
-
-
 
         // setup action bar
         CRUDToolbar = findViewById(R.id.CRUD_toolbar);
@@ -116,7 +103,7 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
         CRUD_AdaptorProduk adaptorCRUDProduk = new CRUD_AdaptorProduk(produkArrayList, authToken);
         adaptorProduk = new CRUD_AdaptorProduk(produkArrayList, authToken);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_dbandeng, menu);
+        inflater.inflate(R.menu.menu_admin, menu);
         MenuItem menuItem = menu.findItem(R.id.search_bar);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Cari Produk ...");

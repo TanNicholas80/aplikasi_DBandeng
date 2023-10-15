@@ -15,6 +15,7 @@ import android.widget.*;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -28,6 +29,7 @@ import com.example.dbandeng.modul.ModulMitra;
 import com.example.dbandeng.modul.ModulProduk;
 import com.example.dbandeng.modul.ModulProdukNew;
 import com.example.dbandeng.response.deleteProdukRes;
+import com.example.dbandeng.utils.diffUtilRecycler;
 import com.squareup.picasso.Picasso;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +45,22 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
     public CRUD_AdaptorProduk(ArrayList<ModulProdukNew> produkArrayList, String authToken) {
         this.produkArrayList = produkArrayList;
         this.authToken = authToken;
+    }
+
+    public void insertData(ArrayList<ModulProdukNew> insertArrayList) {
+        diffUtilRecycler diffUtilCallback = new diffUtilRecycler(produkArrayList, insertArrayList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
+
+        produkArrayList.addAll(insertArrayList);
+        diffResult.dispatchUpdatesTo(this);
+    }
+    public void updateData(ArrayList<ModulProdukNew> newArrayList) {
+        diffUtilRecycler diffUtilCallback = new diffUtilRecycler(produkArrayList, newArrayList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
+
+        produkArrayList.clear();
+        produkArrayList.addAll(newArrayList);
+        diffResult.dispatchUpdatesTo(this);
     }
     @NonNull
     @Override

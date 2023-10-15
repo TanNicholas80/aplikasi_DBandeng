@@ -1,6 +1,16 @@
 package com.example.dbandeng;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +30,7 @@ public class DetailProduk extends AppCompatActivity {
     ImageView foto_detail_produk;
     ModulProduk modulProduk;
     InterfaceDbandeng interfaceDbandeng;
+    Button btn_link_shopee;
     String idProduk;
     Toolbar DetailProdukToolbar;
     @Override
@@ -29,13 +40,18 @@ public class DetailProduk extends AppCompatActivity {
         DetailProdukToolbar = findViewById(R.id.toolbar_detail_produk);
         setSupportActionBar(DetailProdukToolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Kembali");
+        String titledtlproduk = "DETAIL PRODUK";
+
+        SpannableString spannableString = new SpannableString(titledtlproduk);
+        spannableString.setSpan(new ForegroundColorSpan(Color.WHITE), 0, titledtlproduk.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, titledtlproduk.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setTitle(spannableString);
 
         textNmMitra = findViewById(R.id.nama_mitra);
         textNmProduk = findViewById(R.id.nama_produk);
         textHrgProduk = findViewById(R.id.harga_produk);
         textDskProduk = findViewById(R.id.deskripsi_produk);
+        btn_link_shopee = findViewById(R.id.btn_link_produk);
         foto_detail_produk = findViewById(R.id.thumbnail_produk);
         String nama_mitra = getIntent().getStringExtra("nama_mitra");
         String nama_produk = getIntent().getStringExtra("nama_produk");
@@ -49,5 +65,13 @@ public class DetailProduk extends AppCompatActivity {
         textDskProduk.setText(deskripsi_produk);
         textHrgProduk.setText(hrg_produk);
         Picasso.get().load(foto_produk_URL).into(foto_detail_produk);
+        btn_link_shopee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link_produk));
+
+                startActivity(intent);
+            }
+        });
     }
 }

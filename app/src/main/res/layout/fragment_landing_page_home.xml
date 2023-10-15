@@ -18,44 +18,63 @@
                 android:padding="15dp"
                 android:orientation="horizontal"
                 android:layout_marginBottom="20dp"
+                android:background="@drawable/toolbar_background"
             >
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="D'BANDENG"
                     android:fontFamily="@font/poppins_bold"
-                    android:textColor="#39ADFF"
+                    android:textColor="#FFFFFF"
                     android:textSize="26dp"
                 />
                 <RelativeLayout
-                    android:layout_gravity="start"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toStartOf="@+id/nama_user_home" android:text="Hai"/>
-                    <TextView
-                        android:id="@+id/nama_user_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
                         android:layout_toStartOf="@+id/foto_profile_home"
-                        android:text="Nama Anda"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Selamat Datang"
-                        android:layout_marginEnd="10dp"
-                        android:layout_below="@+id/nama_user_home"
-                        android:layout_toLeftOf="@id/foto_profile_home"
-                    />
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="5dp"
+                                android:layout_toStartOf="@+id/nama_user_home"
+                                android:text="Hai"
+                                android:textColor="@color/white"
+                            />
+                            <TextView
+                                android:id="@+id/nama_user_home"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_toStartOf="@+id/foto_profile_home"
+                                android:text="Nama Anda"
+                                android:textColor="@color/white"
+                            />
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/nama_user_home"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toLeftOf="@id/foto_profile_home"
+                            android:text="Selamat Datang"
+                            android:textColor="@color/white"
+                        />
+                    </LinearLayout>
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/foto_profile_home"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/profile_users"
                     />

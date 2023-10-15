@@ -7,7 +7,7 @@
     tools:context=".DetailProduk">
     <include
         android:id="@+id/toolbar_detail_produk"
-        layout="@layout/toolbar"
+        layout="@layout/user_toolbar"
     />
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="80dp"
             android:paddingHorizontal="15dp"
         >
             <ImageView
