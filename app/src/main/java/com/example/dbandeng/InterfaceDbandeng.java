@@ -152,5 +152,5 @@ public interface InterfaceDbandeng {
 
     @Headers("Accept: application/json")
     @GET("product/read/{id}")
-    Call<getProductByMitraRes> getProductByMitra(@Path("id") String id);
+    Call<GetProductResponse> getProductByMitra(@Path("id") String id);
 }
