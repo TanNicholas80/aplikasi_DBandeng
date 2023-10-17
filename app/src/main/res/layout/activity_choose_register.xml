@@ -56,7 +56,7 @@
                         android:textAlignment="center"
                         android:textSize="18dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Selamat Datang, silahkan registrasi" />
+                        android:text="Selamat Datang, silahkan masuk" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Register Sebagai User"
+                        android:text="Login Sebagai User"
                         android:background="@drawable/pill_button" />
                     <Button
                         android:id="@+id/logAdmin"

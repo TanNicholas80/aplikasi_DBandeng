@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.dx.dxloadingbutton.lib.LoadingButton
 import com.example.dbandeng.modul.ModulUser
 import com.example.dbandeng.response.LoginRequest
@@ -18,6 +19,7 @@ class login_user : AppCompatActivity(), View.OnClickListener {
     lateinit var inputEmail: TextInputLayout
     lateinit var inputPass: TextInputLayout
     lateinit var btnLogin_user: LoadingButton
+    lateinit var btnRegis_user: AppCompatButton
     var interfaceDbandeng: InterfaceDbandeng? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +27,10 @@ class login_user : AppCompatActivity(), View.OnClickListener {
         inputEmail = findViewById(R.id.emailUser);
         inputPass = findViewById(R.id.passUser);
         btnLogin_user = findViewById(R.id.btnLogin);
+        btnRegis_user = findViewById(R.id.btnRegister);
 
         btnLogin_user.setOnClickListener(this)
+        btnRegis_user.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
@@ -78,6 +82,10 @@ class login_user : AppCompatActivity(), View.OnClickListener {
                 }
             })
 
+        }
+        if(view.id == R.id.btnRegister){
+            val register_user_layout = Intent(this@login_user, register_user::class.java);
+            startActivity(register_user_layout);
         }
     }
 }

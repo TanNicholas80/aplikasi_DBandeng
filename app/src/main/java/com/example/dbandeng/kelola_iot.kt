@@ -54,7 +54,6 @@ class kelola_iot : AppCompatActivity() {
         socketHandler.on("auth_iot", onNewMessageAuth)
 
 
-
         btnSendToken.setOnClickListener{
             iotConnectStatus.setText("Loading...")
             sendSocketTokenIOT()

@@ -13,7 +13,7 @@ class choose_register : AppCompatActivity() {
         val btnUser = findViewById(R.id.regUser) as Button;
         val btnAdmin = findViewById(R.id.logAdmin) as Button;
         btnUser.setOnClickListener {
-            val register_user_layout = Intent(this@choose_register, register_user::class.java);
+            val register_user_layout = Intent(this@choose_register, login_user::class.java);
 
             startActivity(register_user_layout);
         }

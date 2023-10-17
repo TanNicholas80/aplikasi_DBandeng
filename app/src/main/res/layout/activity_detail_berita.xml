@@ -23,24 +23,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/container_image"
-                android:background="@drawable/frame_berita"
             >
                 <ImageView
                     android:id="@+id/thumbnail_berita"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    tools:ignore="MissingConstraints"/>
+                    tools:ignore="MissingConstraints"
+                    android:scaleType="centerCrop"/>
+
                 <TextView
+                    android:background="@drawable/runded_corner"
                     android:id="@+id/created_news"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="16/10/2003"
-                    android:textSize="14dp"
                     android:textColor="@color/white"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="295dp"
-                    tools:layout_editor_absoluteY="0dp"/>
+                    android:textSize="14dp"
+                    android:paddingHorizontal="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:id="@+id/judul_berita"
