@@ -20,8 +20,16 @@ import java.util.ArrayList;
 
 public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNews.myViewHolder> {
     ArrayList<ModulNews> NewsArrayList;
+    int limit;
+    boolean isLimited = false;
     public landing_AdaptorNews(ArrayList<ModulNews> NewsArrayList) {
         this.NewsArrayList = NewsArrayList;
+        this.limit = -1;
+    }
+
+    public void setLimit(int limit){
+        this.isLimited = true;
+        this.limit = limit;
     }
 
     public void onApplySearch(ArrayList<ModulNews> filteredNews) {
@@ -63,7 +71,11 @@ public class landing_AdaptorNews extends RecyclerView.Adapter<landing_AdaptorNew
 
     @Override
     public int getItemCount() {
-        return NewsArrayList.size();
+        if(isLimited){
+            return Math.min(NewsArrayList.size(), limit);
+        }else{
+            return NewsArrayList.size();
+        }
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder{

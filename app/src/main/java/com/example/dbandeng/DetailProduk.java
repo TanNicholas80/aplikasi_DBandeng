@@ -26,7 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailProduk extends AppCompatActivity {
-    TextView textNmMitra, textNmProduk, textHrgProduk, textDskProduk;
+    TextView textNmMitra, textNmProduk, textHrgProduk, textDskProduk, textStkProduk, textBeratProduk;
     ImageView foto_detail_produk;
     ModulProduk modulProduk;
     InterfaceDbandeng interfaceDbandeng;
@@ -51,6 +51,8 @@ public class DetailProduk extends AppCompatActivity {
         textNmProduk = findViewById(R.id.nama_produk);
         textHrgProduk = findViewById(R.id.harga_produk);
         textDskProduk = findViewById(R.id.deskripsi_produk);
+        textStkProduk = findViewById(R.id.stokProduk);
+        textBeratProduk = findViewById(R.id.beratProduk);
         btn_link_shopee = findViewById(R.id.btn_link_produk);
         foto_detail_produk = findViewById(R.id.thumbnail_produk);
         String nama_mitra = getIntent().getStringExtra("nama_mitra");
@@ -58,12 +60,16 @@ public class DetailProduk extends AppCompatActivity {
         String foto_produk_URL = getIntent().getStringExtra("foto_produk");
         String deskripsi_produk = getIntent().getStringExtra("desk_produk");
         String hrg_produk = getIntent().getStringExtra("harga_produk");
+        String stok_produk = getIntent().getStringExtra("stok_produk");
+        String berat_produk = getIntent().getStringExtra("berat_produk");
         String link_produk = getIntent().getStringExtra("link_produk");
 
         textNmMitra.setText(nama_mitra);
         textNmProduk.setText(nama_produk);
         textDskProduk.setText(deskripsi_produk);
         textHrgProduk.setText(hrg_produk);
+        textStkProduk.setText(stok_produk);
+        textBeratProduk.setText(berat_produk);
         Picasso.get().load(foto_produk_URL).into(foto_detail_produk);
         btn_link_shopee.setOnClickListener(new View.OnClickListener() {
             @Override

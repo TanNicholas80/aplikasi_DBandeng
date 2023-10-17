@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.dx.dxloadingbutton.lib.LoadingButton
 import com.example.dbandeng.modul.ModulUser
 import com.example.dbandeng.response.LoginRequest
 import com.google.android.material.textfield.TextInputLayout
@@ -18,7 +17,7 @@ import retrofit2.Response
 class login_user : AppCompatActivity(), View.OnClickListener {
     lateinit var inputEmail: TextInputLayout
     lateinit var inputPass: TextInputLayout
-    lateinit var btnLogin_user: Button
+    lateinit var btnLogin_user: LoadingButton
     var interfaceDbandeng: InterfaceDbandeng? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +31,8 @@ class login_user : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
 
-        if(view.id ==R.id.btnLogin) {
+        if(view.id==R.id.btnLogin) {
+            btnLogin_user.startLoading()
             val xEmail = inputEmail.editText!!.text.toString()
             val xPass = inputPass.editText!!.text.toString()
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
@@ -62,16 +62,18 @@ class login_user : AppCompatActivity(), View.OnClickListener {
                         val textToaster = rep
                         print(textToaster)
                         print(AuthToken)
-
+                        btnLogin_user.loadingSuccessful()
                         Toast.makeText(this@login_user, "${textToaster}", Toast.LENGTH_LONG).show()
                         val landingPageUser = Intent(this@login_user, meow_button_parent::class.java)
                         startActivity(landingPageUser);
                     } else {
+                        btnLogin_user.loadingFailed()
                         Toast.makeText(this@login_user, "Gagal Login", Toast.LENGTH_LONG).show()
                     }
                 }
                 override fun onFailure(call: Call<ModulUser>, t: Throwable) {
                     Log.d("RegisUser", t.message.toString());
+                    btnLogin_user.loadingFailed()
                     Toast.makeText(this@login_user, "Gagal" + t.message, Toast.LENGTH_SHORT).show()
                 }
             })

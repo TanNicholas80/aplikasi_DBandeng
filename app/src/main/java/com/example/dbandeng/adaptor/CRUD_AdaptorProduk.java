@@ -3,7 +3,6 @@ package com.example.dbandeng.adaptor;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -14,22 +13,16 @@ import android.view.Window;
 import android.widget.*;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.dbandeng.*;
-import com.example.dbandeng.CRUD_Product;
 import com.example.dbandeng.InterfaceDbandeng;
 import com.example.dbandeng.R;
 import com.example.dbandeng.edit_produk;
 import com.example.dbandeng.koneksiAPI;
-import com.example.dbandeng.modul.ModulMitra;
-import com.example.dbandeng.modul.ModulProduk;
 import com.example.dbandeng.modul.ModulProdukNew;
 import com.example.dbandeng.response.deleteProdukRes;
-import com.example.dbandeng.utils.diffUtilRecycler;
 import com.squareup.picasso.Picasso;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,30 +30,12 @@ import retrofit2.Response;
 
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.myViewHolder> {
     ArrayList<ModulProdukNew> produkArrayList;
     private String authToken;
     public CRUD_AdaptorProduk(ArrayList<ModulProdukNew> produkArrayList, String authToken) {
         this.produkArrayList = produkArrayList;
         this.authToken = authToken;
-    }
-
-    public void insertData(ArrayList<ModulProdukNew> insertArrayList) {
-        diffUtilRecycler diffUtilCallback = new diffUtilRecycler(produkArrayList, insertArrayList);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
-
-        produkArrayList.addAll(insertArrayList);
-        diffResult.dispatchUpdatesTo(this);
-    }
-    public void updateData(ArrayList<ModulProdukNew> newArrayList) {
-        diffUtilRecycler diffUtilCallback = new diffUtilRecycler(produkArrayList, newArrayList);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
-
-        produkArrayList.clear();
-        produkArrayList.addAll(newArrayList);
-        diffResult.dispatchUpdatesTo(this);
     }
     @NonNull
     @Override
@@ -127,6 +102,7 @@ public class CRUD_AdaptorProduk extends RecyclerView.Adapter<CRUD_AdaptorProduk.
                             @Override
                             public void onResponse(Call<deleteProdukRes> call, Response<deleteProdukRes> response) {
                                 if(response.isSuccessful()) {
+                                    produkArrayList.remove(position);
                                     notifyItemRemoved(position);
                                     Toast.makeText(context, "Berhasil Menghapus Produk", Toast.LENGTH_LONG).show();
                                 }

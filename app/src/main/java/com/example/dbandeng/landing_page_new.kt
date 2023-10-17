@@ -16,9 +16,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.denzcoskun.imageslider.ImageSlider
-import com.denzcoskun.imageslider.constants.AnimationTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.example.dbandeng.adaptor.landing_AdaptorNews
 import com.example.dbandeng.modul.ModulNews
 import com.example.dbandeng.response.GetArticleResponse
@@ -45,6 +42,7 @@ class landing_page_new : Fragment() {
     var modulNewsDump: ModulNews? = null
     var NewsArrayList : ArrayList<ModulNews>? = null
     var newsAdaptor : landing_AdaptorNews? = null
+    var recyclerLimit: RecyclerView? = null
 
 
     private lateinit var NewsToolbar: Toolbar
@@ -65,13 +63,15 @@ class landing_page_new : Fragment() {
         setHasOptionsMenu(true);
         newsLayout = inflater.inflate(R.layout.fragment_landing_page_new, container, false)
         // setup Recyler View
+        getNewsLanding()
         recyclerView = newsLayout.findViewById(R.id.news_recycle)
         recyclerView?.setLayoutManager(LinearLayoutManager(requireContext()))
-        try {
-            getNewsLanding()
-        } catch (e: Exception) {
-            Log.d("crud_produk", e.message!!)
-        }
+        // setup recycler limit
+        recyclerLimit = newsLayout.findViewById(R.id.recycler_limit)
+        recyclerLimit?.setLayoutManager(LinearLayoutManager(requireContext()))
+        newsAdaptor = landing_AdaptorNews(NewsArrayList)
+        newsAdaptor!!.setLimit(3)
+        recyclerLimit?.setAdapter(newsAdaptor)
         // setup toolbar
         NewsToolbar = newsLayout.findViewById(R.id.news_toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(NewsToolbar)
@@ -81,17 +81,6 @@ class landing_page_new : Fragment() {
         spannableString.setSpan(ForegroundColorSpan(Color.WHITE), 0, titlearticle.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(StyleSpan(Typeface.BOLD), 0, titlearticle.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         (requireActivity() as AppCompatActivity).supportActionBar!!.title = spannableString
-        // setup carousel
-        val imageList = ArrayList<SlideModel>() // Create image list
-
-        imageList.add(SlideModel(R.drawable.news1_min))
-        imageList.add(SlideModel(R.drawable.news2_min))
-        imageList.add(SlideModel(R.drawable.news3_min))
-
-        val imageSlider = newsLayout.findViewById<ImageSlider>(R.id.image_slider)
-
-        imageSlider.setImageList(imageList)
-        imageSlider.setSlideAnimation(AnimationTypes.ZOOM_OUT)
 
         return newsLayout
     }
@@ -158,6 +147,7 @@ class landing_page_new : Fragment() {
                 NewsArrayList = ArrayList<ModulNews>(responseData)
                 newsAdaptor = landing_AdaptorNews(NewsArrayList)
                 recyclerView!!.setAdapter(newsAdaptor)
+                recyclerLimit!!.setAdapter(newsAdaptor)
             }
 
             override fun onFailure(call: Call<GetArticleResponse>, t: Throwable) {

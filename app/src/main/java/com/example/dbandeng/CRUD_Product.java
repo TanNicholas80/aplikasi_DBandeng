@@ -83,9 +83,9 @@ public class CRUD_Product extends AppCompatActivity implements View.OnClickListe
                 String responseData = response.body().getData();
                 Gson gson = new Gson();
                 ModulMitra modelMitra = gson.fromJson(responseData, ModulMitra.class);
-                ArrayList<ModulProdukNew> produkMitra = new ArrayList(modelMitra.getProducts());
+                ArrayList<ModulProdukNew> produkMitra = new ArrayList<>(modelMitra.getProducts());
                 CRUD_AdaptorProduk adaptorProduk=new CRUD_AdaptorProduk(produkMitra, authToken);
-                produkArrayList = new ArrayList(modelMitra.getProducts());
+                produkArrayList = new ArrayList<>(modelMitra.getProducts());
                 adaptorProduk=new CRUD_AdaptorProduk(produkArrayList, authToken);
                 recyclerView.setAdapter(adaptorProduk);
             }

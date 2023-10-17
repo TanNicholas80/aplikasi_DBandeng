@@ -99,15 +99,19 @@
                             android:hint="Password"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
+                    <com.dx.dxloadingbutton.lib.LoadingButton
                         android:id="@+id/btnLogin"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="20dp"
-                        android:text="Login"
-                        android:background="@drawable/rounded_edit_text"
-                    />
+                        app:lb_resetAfterFailed="true"
+                        app:lb_btnColor="@color/light_blue"
+                        app:lb_btnRippleColor="@color/light_blue"
+                        app:lb_btnDisabledColor="#cccccc"
+                        app:lb_disabledTextColor="#999999"
+                        app:lb_cornerRadius="10dp"
+                        app:lb_rippleEnable="true"
+                        app:lb_btnText="@string/Login"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

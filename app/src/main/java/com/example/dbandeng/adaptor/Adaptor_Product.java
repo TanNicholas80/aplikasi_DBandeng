@@ -66,6 +66,8 @@ public class Adaptor_Product extends RecyclerView.Adapter<Adaptor_Product.myView
                 intent.putExtra("foto_produk", produkArrayList.get(position).getfoto_produk());
                 intent.putExtra("desk_produk", produkArrayList.get(position).getKeterangan_produk());
                 intent.putExtra("harga_produk", produkArrayList.get(position).getHarga_produk());
+                intent.putExtra("stok_produk", "Stok : " + produkArrayList.get(position).getStok_produk());
+                intent.putExtra("berat_produk", "Berat : " + produkArrayList.get(position).getBerat_produk());
                 intent.putExtra("link_produk", produkArrayList.get(position).getLink_produk());
 
                 holder.itemView.getContext().startActivity(intent);

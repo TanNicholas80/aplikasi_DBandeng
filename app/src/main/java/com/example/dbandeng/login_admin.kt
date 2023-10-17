@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.dx.dxloadingbutton.lib.LoadingButton
 import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.response.LoginRequest
 import com.google.android.material.textfield.TextInputLayout
@@ -19,7 +18,7 @@ import retrofit2.Response
 class login_admin : AppCompatActivity(), View.OnClickListener {
     lateinit var inputEmail: TextInputLayout
     lateinit var inputPass: TextInputLayout
-    lateinit var btnLogin_admin: Button
+    lateinit var btnLogin_admin: LoadingButton
     var interfaceDbandeng: InterfaceDbandeng? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +32,7 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
    override fun onClick(view: View) {
         if(view.id==R.id.btnLogin) {
             // Login Admin
+            btnLogin_admin.startLoading()
             interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
             val xEmail = inputEmail.editText!!.text.toString()
             val xPass = inputPass.editText!!.text.toString()
@@ -60,17 +60,19 @@ class login_admin : AppCompatActivity(), View.OnClickListener {
                         val textToaster = rep
                         print(textToaster)
                         print(AuthToken)
+                        btnLogin_admin.loadingSuccessful()
                         Toast.makeText(this@login_admin, "${textToaster}", Toast.LENGTH_LONG).show()
                         val loginAdmin_layout = Intent(this@login_admin, Beranda::class.java);// ntar ganti beranda lagi
 
                         startActivity(loginAdmin_layout);
                     } else {
-
+                        btnLogin_admin.loadingFailed()
                         Toast.makeText(this@login_admin, "Gagal Login", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(call: Call<ModulMitra>, t: Throwable) {
+                    btnLogin_admin.loadingFailed()
                     Log.d("loginAdmin", t.message.toString());
                     Toast.makeText(this@login_admin, "Gagal" + t.message, Toast.LENGTH_SHORT).show()
                 }

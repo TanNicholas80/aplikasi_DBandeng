@@ -23,12 +23,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/container_image"
+                android:background="@drawable/frame_berita"
             >
                 <ImageView
                     android:id="@+id/thumbnail_berita"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:background="@drawable/frame_berita" tools:ignore="MissingConstraints"/>
+                    tools:ignore="MissingConstraints"/>
                 <TextView
                     android:id="@+id/created_news"
                     android:layout_width="wrap_content"

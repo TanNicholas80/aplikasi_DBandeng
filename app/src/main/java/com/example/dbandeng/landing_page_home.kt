@@ -52,6 +52,7 @@ class landing_page_home : Fragment() {
     var modulMitraDump: ModulMitra? = null
     var MitraArrayList = ArrayList<ModulMitraLP>()
     lateinit var adaptorProduk: Adaptor_Product
+    lateinit var adaptorNews: landing_AdaptorNews
     private lateinit var homeLayout: View
 
     lateinit var fotoProfil: CircleImageView;
@@ -105,13 +106,14 @@ class landing_page_home : Fragment() {
         val layoutManagerProduk = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerViewProduk?.layoutManager = layoutManagerProduk
         adaptorProduk = Adaptor_Product(ProdukArrayList)
-        adaptorProduk.setLimit(3);
+        adaptorProduk.setLimit(3)
         recyclerViewProduk?.setAdapter(adaptorProduk)
 
 
         val layoutManagerNews = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerViewBerita?.layoutManager = layoutManagerNews
-        val adaptorNews = landing_AdaptorNews(NewsArrayList)
+        adaptorNews = landing_AdaptorNews(NewsArrayList)
+        adaptorNews.setLimit(3)
         recyclerViewBerita?.setAdapter(adaptorNews)
 
 
@@ -151,7 +153,7 @@ class landing_page_home : Fragment() {
                 val responseData: List<ModulProduk> = response.body()!!.data
                 ProdukArrayList = java.util.ArrayList<ModulProduk>(responseData)
                 adaptorProduk = Adaptor_Product(ProdukArrayList)
-                adaptorProduk.setLimit(8);
+                adaptorProduk.setLimit(6)
                 recyclerViewProduk?.setAdapter(adaptorProduk)
             }
 
@@ -170,7 +172,8 @@ class landing_page_home : Fragment() {
                 if(response.isSuccessful){
                     val responseData: List<ModulNews>? = response.body()?.data
                     NewsArrayList = java.util.ArrayList<ModulNews>(responseData)
-                    val adaptorNews = landing_AdaptorNews(NewsArrayList)
+                    adaptorNews = landing_AdaptorNews(NewsArrayList)
+                    adaptorNews.setLimit(3)
                     recyclerViewBerita?.setAdapter(adaptorNews)
                 }
             }
