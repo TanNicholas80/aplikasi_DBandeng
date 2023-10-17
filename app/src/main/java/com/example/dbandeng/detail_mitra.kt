@@ -2,22 +2,33 @@ package com.example.dbandeng
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dbandeng.adaptor.AdaptorModulProductNew
 import com.example.dbandeng.adaptor.Adaptor_Product
+import com.example.dbandeng.modul.ModulMitra
 import com.example.dbandeng.modul.ModulMitraLP
 import com.example.dbandeng.modul.ModulProduk
+import com.example.dbandeng.modul.ModulProdukNew
+import com.example.dbandeng.response.GetProductResponse
 import com.example.dbandeng.response.getDetailMitraResponse
-import com.example.dbandeng.response.getProductByMitraRes
+import com.example.dbandeng.utils.AddTextOnChangeListener
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class detail_mitra : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
@@ -26,9 +37,10 @@ class detail_mitra : AppCompatActivity() {
     lateinit var mitraPhone: TextView
     lateinit var mitraAddress: TextView
     lateinit var idMitra:String
+    lateinit var searchInput : TextInputEditText
     var modulMitra : ArrayList<ModulMitraLP>? = null
-    var produkArrayList: ArrayList<ModulProduk>? = null
-    var produkAdaptor : Adaptor_Product? = null
+    var produkArrayList: ArrayList<ModulProdukNew>? = null
+    var produkAdaptor : AdaptorModulProductNew? = null
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +52,41 @@ class detail_mitra : AppCompatActivity() {
         mitraAddress = findViewById(R.id.dtl_alamat_mitra)
         recyclerView = findViewById(R.id.dtl_recycler_produk)
         recyclerView?.setLayoutManager(GridLayoutManager(this, 2))
+        searchInput = findViewById(R.id.cariProduk)
+
+        //searchInput.editText?.addTextChangedListener {object : AddTextOnChangeListener(this, searchInput.editText);)
+
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Metode ini dipanggil sebelum teks berubah
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Metode ini dipanggil saat teks berubah
+                val newText = s.toString()
+
+                val searchList = ArrayList<ModulProdukNew>()
+
+                if(newText != null) {
+                    val query = newText.lowercase(Locale.ROOT)
+                    for (i in produkArrayList!!) {
+                        if (i.nmProduk.lowercase(Locale.ROOT).contains(query)) {
+                            searchList.add(i)
+                        }
+                    }
+                    if (searchList.isEmpty()) {
+                        Toast.makeText(this@detail_mitra, "Data Produk Tidak Ditemukan", Toast.LENGTH_SHORT).show()
+                    } else {
+                        produkAdaptor!!.onApplySearch(searchList)
+                    }
+                }
+                // Di sini Anda dapat memproses atau mengubah data sesuai dengan teks yang baru dimasukkan
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Metode ini dipanggil setelah teks berubah
+            }
+        })
 
         idMitra = intent.getStringExtra("id_mitra").toString()
         val name_mitra = intent.getStringExtra("nama_mitra")
@@ -87,17 +134,21 @@ class detail_mitra : AppCompatActivity() {
 
     fun getProdukMitra(idMitra:String?) {
         val interfaceDbandeng = koneksiAPI.Koneksi().create(InterfaceDbandeng::class.java)
-        val getProdukByMitra:Call<getProductByMitraRes>? = interfaceDbandeng?.getProductByMitra(idMitra)
-        getProdukByMitra?.enqueue(object: Callback<getProductByMitraRes> {
-            override fun onResponse(call: Call<getProductByMitraRes>, response: Response<getProductByMitraRes>) {
-                val responseData: ArrayList<ModulProduk> = response.body()!!.data
-                produkArrayList = ArrayList<ModulProduk>(responseData)
-                produkAdaptor = Adaptor_Product(produkArrayList)
+        val getProdukByMitra:Call<GetProductResponse>? = interfaceDbandeng?.getProductByMitra(idMitra)
+        getProdukByMitra?.enqueue(object: Callback<GetProductResponse> {
+            override fun onResponse(call: Call<GetProductResponse>, response: Response<GetProductResponse>) {
+                val responseData = response.body()!!.data
+                val gson = Gson()
+                val modelMitra = gson.fromJson(responseData, ModulMitra::class.java)
+                val produkMitra: List<ModulProdukNew> = modelMitra.products
+                produkArrayList = ArrayList<ModulProdukNew>(produkMitra)
+                produkAdaptor = AdaptorModulProductNew(produkArrayList, modelMitra.nama_mitra)
                 recyclerView!!.setAdapter(produkAdaptor)
                 Log.d("cek_resp", "$responseData");
             }
 
-            override fun onFailure(call: Call<getProductByMitraRes>, t: Throwable) {
+            override fun onFailure(call: Call<GetProductResponse>, t: Throwable) {
+                Log.d("cek_resp", t.message.toString());
                 Toast.makeText(this@detail_mitra, "gagal get produk" + t.message, Toast.LENGTH_LONG).show()
             }
 
