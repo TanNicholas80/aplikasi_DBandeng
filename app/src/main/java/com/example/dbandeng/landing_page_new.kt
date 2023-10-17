@@ -42,6 +42,7 @@ class landing_page_new : Fragment() {
     var modulNewsDump: ModulNews? = null
     var NewsArrayList : ArrayList<ModulNews>? = null
     var newsAdaptor : landing_AdaptorNews? = null
+    var adaptorNew : landing_AdaptorNews? = null
     var recyclerLimit: RecyclerView? = null
 
 
@@ -68,10 +69,7 @@ class landing_page_new : Fragment() {
         recyclerView?.setLayoutManager(LinearLayoutManager(requireContext()))
         // setup recycler limit
         recyclerLimit = newsLayout.findViewById(R.id.recycler_limit)
-        recyclerLimit?.setLayoutManager(LinearLayoutManager(requireContext()))
-        newsAdaptor = landing_AdaptorNews(NewsArrayList)
-        newsAdaptor!!.setLimit(3)
-        recyclerLimit?.setAdapter(newsAdaptor)
+        recyclerLimit?.setLayoutManager(LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false))
         // setup toolbar
         NewsToolbar = newsLayout.findViewById(R.id.news_toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(NewsToolbar)
@@ -146,8 +144,10 @@ class landing_page_new : Fragment() {
                 val responseData: List<ModulNews> = response.body()!!.data
                 NewsArrayList = ArrayList<ModulNews>(responseData)
                 newsAdaptor = landing_AdaptorNews(NewsArrayList)
+                adaptorNew = landing_AdaptorNews(NewsArrayList)
+                adaptorNew!!.setLimit(3)
                 recyclerView!!.setAdapter(newsAdaptor)
-                recyclerLimit!!.setAdapter(newsAdaptor)
+                recyclerLimit!!.setAdapter(adaptorNew)
             }
 
             override fun onFailure(call: Call<GetArticleResponse>, t: Throwable) {
