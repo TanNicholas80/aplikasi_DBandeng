@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class koneksiAPI {
-    public static final String url_base="https://website-bandeng-backend2.vercel.app/api/api/";
+    public static final String url_base="https://api2.dbandeng.online/api/";
     private static Retrofit retrofit;
     public static Retrofit Koneksi()
     {
