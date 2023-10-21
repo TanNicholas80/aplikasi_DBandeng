@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dbandeng"
+    namespace = "com.nicholas.dbandeng"
     compileSdk = 33
 
     buildFeatures{
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.dbandeng"
+        applicationId = "com.nicholas.dbandeng"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
